@@ -12,17 +12,28 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 
-# Create your views here.
+def getUserWithSimilarBook(user):
+    userAll= User.objects.all()
+    similarUser=[]
+    for book in user.books.all():
+        isbn=book.isbn
+        for u in userAll:
+            if u.books.filter(isbn=isbn).count()>0 and not ( u in similarUser) and not (u == user ):
+                similarUser.append(u)
+
+    return similarUser        
+
 def home(request):
     if not request.user.is_authenticated:
         return redirect("/login")
     else:
         x = ""
         user= request.user
+        recommendedUsers = getUserWithSimilarBook(user)
         if request.method == 'POST':
             x = request.POST["name"]
             
-        return render(request, "index.html",{"string":x,"user":user})
+        return render(request, "index.html",{"string":x,"user":user,"recommendedUsers":recommendedUsers})
 
 def login(request):
     if request.user.is_authenticated:
