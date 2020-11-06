@@ -30,7 +30,7 @@ def slug_generator(sender,instance,*arg,**k):
 
 pre_save.connect(slug_generator,sender=User)  
 
-class post(models.Model):
+class Post(models.Model):
     user= models.OneToOneField(User, null=True, blank=True, on_delete=models.SET_NULL)
     caption = models.CharField( max_length=10000, null=True, blank=True)
     bookid = models.CharField( max_length=100, null=True, blank=True)
