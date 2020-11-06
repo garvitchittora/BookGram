@@ -1,0 +1,26 @@
+Register
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <input type="text" name="first" placeholder="First Name">
+    <input type="text" name="second" placeholder="Second Name">
+    
+    <input type="email" name="email" placeholder="email" required>
+
+    <input accept="image/*" type="file" name="image"/>
+
+    <input type="password" name="password1" placeholder="Password" required>
+    <input type="password" name="password2" placeholder="Confirm Password" required>
+    <input type="submit" value="Submit" />
+</form>
+
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="list-style: none;color: red;">
+    * {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+    {{ message }}
+</li>
+{% endfor %}
+</ul>
+{% endif %}

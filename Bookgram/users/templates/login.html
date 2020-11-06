@@ -1,0 +1,18 @@
+Login
+<form method="POST">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="email" required>
+    <input type="password" name="password" placeholder="password" required>
+    <input type="submit" value="Submit" />
+</form>
+
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="list-style: none;color: red;">
+    * {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+    {{ message }}
+</li>
+{% endfor %}
+</ul>
+{% endif %}
