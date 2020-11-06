@@ -1,18 +1,52 @@
-Login
-<form method="POST">
-    {% csrf_token %}
-    <input type="email" name="email" placeholder="email" required>
-    <input type="password" name="password" placeholder="password" required>
-    <input type="submit" value="Submit" />
-</form>
-
-{% if messages %}
-<ul class="messages">
-{% for message in messages %}
-<li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="list-style: none;color: red;">
-    * {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-    {{ message }}
-</li>
-{% endfor %}
-</ul>
-{% endif %}
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="{% static 'css/styles.css'%}" />
+<link rel="stylesheet" href="{% static 'dist/bootstrap.min.css'%}" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
+  rel="stylesheet"
+/>
+<div class="loginPage">
+  <div>
+    <div class="loginCard">
+      <div class="loginText">
+        <h1>Login</h1>
+        <h3>Find some new books</h3>
+      </div>
+      <div class="auth-div" id="login-div">
+        <form method="POST">
+            {% csrf_token %}
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              class="form-control"
+              aria-describedby="emailHelp"
+              name="email"
+            />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              class="form-control"
+              aria-describedby="emailHelp"
+              name="password"
+            />
+          </div>
+          <button class="loginButton">Login</button>
+          {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="list-style: none;color: red;">
+                * {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
