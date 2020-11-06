@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import User,Post
+from .models import User, Post, Book
 
 
 class CustomUserAdmin(UserAdmin):
@@ -9,7 +9,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'is_staff', 'is_active',)
     list_filter = ('email', 'is_staff', 'is_active',)
     fieldsets = (
-        (None, {'fields': ('first_name','last_name','email','slug','image','password')}),
+        (None, {'fields': ('first_name','last_name','email','slug','books','image','password')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
     add_fieldsets = (
@@ -23,3 +23,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(User,CustomUserAdmin)
 admin.site.register(Post)
+admin.site.register(Book)
