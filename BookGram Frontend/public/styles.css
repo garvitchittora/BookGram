@@ -208,3 +208,35 @@ right: 0;
   display: -webkit-box;
   margin-bottom: 0px;
 }
+
+
+#list{
+  margin-top: 100px !important;
+}
+
+.search-box{
+  margin-top: 50px;
+}
+
+#inp_text{
+  border: 1px solid rgb(70, 139, 218);
+}
+
+.books-list{
+  list-style-type: none;
+  text-align: center;
+}
+
+#your-books{
+  color:#ad4455;
+  padding: 50px;
+}
+
+.your-bks-img{
+  left:400px;
+}
+
+.ybks-list{
+  list-style-type: none;
+  text-align: center;
+}
