@@ -99,7 +99,7 @@ for name in list1:
 book_tags = pd.merge(df_books, merge_tags, left_on='book_id',
                      right_on='goodreads_book_id', how='inner')
 
-tfidf_matrix_tag = tf.fit_transform(book_tags['tag_name'])
+tfidf_matrix_tag = tf.fit_transform(book_tags['tag_name'].head(10000))
 
 cosine_sim_tag = linear_kernel(tfidf_matrix_tag, tfidf_matrix_tag)
 print(cosine_sim_tag)
