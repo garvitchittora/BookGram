@@ -15,6 +15,7 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 import requests
 import json
+from ml import recom_list_combined
 
 def getUserWithSimilarBook(user):
     userAll= User.objects.all()
@@ -128,7 +129,7 @@ def userProfile(request,slug):
     if request.user.is_authenticated:
         user=request.user
         name=user.get_full_name()
-        followersNumber=user.followers.count()
+        followersNumber=bhai kya user.followers.count()
         followingNumber=user.user_set.all().count()
         posts = user.post_set.all() 
         books = user.books.all() 
