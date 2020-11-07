@@ -127,14 +127,14 @@ def userProfile(request,slug):
     
     return render(request, "userProfile.html",{})
 
-def bookPage(request,slug):
+def bookDetails(request,slug):
     print(slug)
     x = ""
     if request.method == 'POST':
         x = request.POST["name"]
         
     
-    return render(request, "index.html",{"string":x})
+    return render(request, "bookdetails.html",{"string":x})
 
 def searchUser(request):
     x = ""

@@ -1,0 +1,114 @@
+{% load static %}
+{% include "partials/header.html" %}
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css" rel="stylesheet"/> 
+<section class="details-page container">
+    <div class="row p-2">
+        <div class="col-9">
+            <div class="post-container post-details-container m-0">
+                <div class="heading-container">
+                    <div>
+                        <a class="a-tag-post" href="#">
+                            <h3 class="post-book-name display-3">The way of kings</h3>
+                        </a>
+                    </div>
+                    <div>
+                        <a class="a-tag-post" href="#">
+                        <h2 class="post-book-author">Brandon Sanderson</h2>
+                        </a>
+                        <!-- {% for day in session_data.temp %}
+                                                    {{day}}
+                                                    {% if not forloop.last %} 
+                                                    ,
+                                                    {% endif %}
+                                                {% endfor %} -->
+                    </div>
+                </div>
+                
+                <div class="post-image-container d-flex align-items-center">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsffbookreview.files.wordpress.com%2F2016%2F07%2Fway-of-kings1.jpg&f=1&nofb=1" alt="book image" class="post-image">
+                        <div style="text-align: left;padding: 0 30px;">
+                            <p class="caption-style-1" id="caption">
+                                From #1 New York Times bestselling author Brandon Sanderson, The Way of Kings, Book One of the Stormlight Archive begins an incredible new saga of epic proportion. Roshar is a world of stone and storms. Uncanny tempests of incredible power sweep across the rocky terrain so frequently that they have shaped ecology and civilization alike. Animals hide in shells, trees pull in branches, and grass retracts into the soilless ground. Cities are built only where the topography offers shelter. It has been centuries since the fall of the ten consecrated orders known as the Knights Radiant, but their Shardblades and Shardplate remain: mystical swords and suits of armor that transform ordinary men into near-invincible warriors. Men trade kingdoms for Shardblades. 
+                            </p>
+                            
+                            <a onclick="myFunction(this)" id="myBtn" style="cursor: pointer;color:#FFB1B9;">more</a>
+                            <p class="caption-style-3 d-flex justify-content-between">
+                                <span>Page Count: 400</span>
+                                <span>Publisher: Tor Books</span>
+                                <span>Publishing date: 2010-08-31</span>
+                            </p>
+                            <span id="dots" style="cursor: pointer;color:#FFB1B9;"></span>
+                            <div>
+                                <div class="rateYo" style="margin: auto;padding: 3px;"></div>
+                            </div>
+                            <div class="add-book-container">
+                                <div class="button_cont"><a class="example_f" href="#" target="_blank" rel="nofollow"><span>Add Book</a></div>
+                            </div>
+                        </div>
+                </div>
+                <script type="text/javascript">
+                    $(".rateYo").rateYo({
+                        rating: "4",
+                        readOnly: true,
+                        starWidth: "18px"
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="col-3 recent__books">
+            <h2>Recently Saved Books</h2>
+            <div class="recent__books-main">
+                <div class="book d-flex">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsffbookreview.files.wordpress.com%2F2016%2F07%2Fway-of-kings1.jpg&f=1&nofb=1" alt="Book">
+                    <div class="recent__books-info">
+                        <h3>The way of kings</h3>
+                        <h4>Brandon Sanderson</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="recent__books-main">
+                <div class="book d-flex">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsffbookreview.files.wordpress.com%2F2016%2F07%2Fway-of-kings1.jpg&f=1&nofb=1" alt="Book">
+                    <div class="recent__books-info">
+                        <h3>The way of kings</h3>
+                        <h4>Brandon Sanderson</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="recent__books-main">
+                <div class="book d-flex">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsffbookreview.files.wordpress.com%2F2016%2F07%2Fway-of-kings1.jpg&f=1&nofb=1" alt="Book">
+                    <div class="recent__books-info">
+                        <h3>The way of kings</h3>
+                        <h4>Brandon Sanderson</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function myFunction(element) {
+        var pElement=$(element).closest(":has(p)").find('p');
+        console.log(pElement.text())
+        var dots = $(element).closest(":has(span)").find('span');
+        var btnText = element;
+        if (dots.css("display") === "none") {
+            dots.css("display","inline");
+            btnText.innerHTML = "more"; 
+            pElement.addClass("caption-style-1");
+            pElement.removeClass("caption-style-2");
+        } else {
+            dots.css("display","none");
+            btnText.innerHTML = "less"; 
+            pElement.addClass("caption-style-2");
+            pElement.removeClass("caption-style-1");
+        }
+    }
+</script>
+
+{% endblock %}
