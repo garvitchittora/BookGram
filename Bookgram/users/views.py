@@ -13,14 +13,16 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
+import requests
+import json
 
 def getUserWithSimilarBook(user):
     userAll= User.objects.all()
     similarUser=[]
     for book in user.books.all():
-        isbn=book.isbn
+        bookid=book.bookid
         for u in userAll:
-            if u.books.filter(isbn=isbn).count()>0 and not ( u in similarUser) and not (u == user ):
+            if u.books.filter(bookid=bookid).count()>0 and not ( u in similarUser) and not (u == user ):
                 similarUser.append(u)
 
     return similarUser        
@@ -123,9 +125,53 @@ def activate(request, uidb64, token):
         return render(request, 'invalidEmail.html') 
 
 def userProfile(request,slug):
-    print(slug)
-    
-    return render(request, "userProfile.html",{})
+    if request.user.is_authenticated:
+        user=request.user
+        name=user.get_full_name()
+        followersNumber=user.followers.count()
+        followingNumber=user.user_set.all().count()
+        posts = user.post_set.all() 
+        books = user.books.all() 
+
+        if request.method == 'POST':
+            id=request.POST["id"]
+            title=request.POST["title"]     
+            if books.filter(bookid=id).count()==0:
+                print("new")
+
+        dataPosts=[]
+        for post in posts:
+            data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+post.bookid).json()
+            if "items" in data:
+                data=data["items"]
+                if len(data)>=0 :
+                    data=data[0]
+                    obj={"name":"","authors":"","image":"","caption":post.caption,"bookid":post.bookid,"rating":"0"}
+                    obj["name"]=data["volumeInfo"]["title"]
+                    obj["authors"]=data["volumeInfo"]["authors"]
+                    obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                    if 'averageRating' in data["volumeInfo"]:
+                        obj["rating"]=str(data["volumeInfo"]["averageRating"])
+                    dataPosts.append(obj)
+        
+        dataBook=[]
+        for book in books:
+            data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+book.bookid).json()
+            if "items" in data:
+                data=data["items"]
+                if len(data)>=0 :
+                    data=data[0]
+                    obj={"name":"","authors":"","image":"","bookid":post.bookid,"rating":"0"}
+                    obj["name"]=data["volumeInfo"]["title"]
+                    obj["authors"]=data["volumeInfo"]["authors"]
+                    obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                    if 'averageRating' in data["volumeInfo"]:
+                        obj["rating"]=str(data["volumeInfo"]["averageRating"])
+                    dataBook.append(obj)
+
+        return render(request, "userProfile.html",{"name":name,"followersNumber":followersNumber,"followingNumber":followingNumber,"dataPosts":dataPosts,"dataBook":dataBook})
+    else:
+        return redirect("/login")     
 
 def bookPage(request,slug):
     print(slug)

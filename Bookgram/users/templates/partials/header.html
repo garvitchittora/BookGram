@@ -33,7 +33,7 @@
             <ul class="navbar-nav ml-auto">
                 {% if request.user.is_authenticated %}
                 <li class="nav-item px-lg-2 d-flex logged-in-as">
-                    <a href="user/{{request.user.slug}}">
+                    <a href="/user/{{request.user.slug}}">
                         {% if request.user.image %}
                             <img src="{{request.user.image.url}}" class="align-self-center" id="display-picture">
                         {% endif%}
