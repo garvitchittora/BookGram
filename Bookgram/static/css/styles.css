@@ -110,130 +110,169 @@ body {
   border-radius: 50%;
 }
 
+.profile{
+  padding: 5rem 10rem;
+}
+
+.profile-hero{
+  background-color: #FFC3A0;
+  align-items: center;
+  border-radius: 2rem;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.recent__books{
+  background-color: #f8f9fd;
+  border-radius: 2rem;
+  padding: 2rem 10rem;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.profile-hero img{
+  width: 15rem;
+  height: 15rem;
+}
+
+.book{
+  margin-top: 2rem;
+  background-color: rgb(227, 245, 238);
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 1rem;
+  padding: 1rem 0;
+}
+
+.book img{
+  border-radius: 1rem;
+  width: 10rem;
+}
+
 .example_f {
-border-radius: 4px;
-background: linear-gradient(45deg, #ffafbd 0%, #ffc3a0 100%) !important;
-border: none;
-color: #FFFFFF !important;
-text-align: center;
-text-transform: uppercase;
-font-size: 16px;
-border-radius: 50px;
-padding: 10px 15px;
-width: 200px;
-transition: all 0.4s;
-cursor: pointer;
-margin: 5px;
-}
-.example_f span {
-cursor: pointer;
-display: inline-block;
-position: relative;
-transition: 0.4s;
-}
-.example_f span:after {
-content: '+';
-position: absolute;
-opacity: 0;
-top: 0;
-right: -20px;
-transition: 0.5s;
-}
-.example_f:hover span {
-padding-right: 25px;
-}
-.example_f:hover span:after {
-opacity: 1;
-right: 0;
-}
-.post-container{
-  margin: 20px 0px;
-  border: 1px solid rgb(239,239,239);
-  padding-right: 0 !important;
-  border-radius: 15px;
-  overflow: hidden;
-  padding-left: 0 !important;
+  border-radius: 4px;
+  background: linear-gradient(45deg, #ffafbd 0%, #ffc3a0 100%) !important;
+  border: none;
+  color: #FFFFFF !important;
   text-align: center;
-}
-.post-image-container{
+  text-transform: uppercase;
+  font-size: 16px;
+  border-radius: 50px;
+  padding: 10px 15px;
+  width: 200px;
+  transition: all 0.4s;
+  cursor: pointer;
+  margin: 5px;
+  }
+  .example_f span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.4s;
+  }
+  .example_f span:after {
+  content: '+';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+  }
+  .example_f:hover span {
+  padding-right: 25px;
+  }
+  .example_f:hover span:after {
+  opacity: 1;
+  right: 0;
+  }
+  .post-container{
+    margin: 20px 0px;
+    border: 1px solid rgb(239,239,239);
+    padding-right: 0 !important;
+    border-radius: 15px;
+    overflow: hidden;
+    padding-left: 0 !important;
     text-align: center;
-    background-color: #FAFAFA;
-}
-.post-image{
-  border-radius: 20px;
-  box-shadow: -5px 5px 20px #8888;
-}
-.heading-container{
-  font-family: Raleway;
-  padding: 10px;
-  background-color: white;
-}
-.post-footer{
-  margin-top: 20px;
-  padding: 20px;
-  margin-right: 0 !important;
-  margin-left: 0 !important;
-  background-color: white;
-}
-.add-book-container{
-  text-align: center;
-  margin-top: 15px;
-}
-.post-book-name{
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; 
-  height:2.3em;
-  -webkit-box-orient: vertical;
-  font-size: 20px;
-}
-.post-book-author{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; 
-  height:2.3em;
-  -webkit-box-orient: vertical;
-  font-size: 17px;
-}
-.a-tag-post{
-  color: black !important;
-  text-decoration: none !important;
-}
-.user-recom-footer{
-  padding: 20px;
-  margin-right: 0 !important;
-  margin-left: 0 !important;
-  background-color: white;
-}
-.image-user-r{
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-}
-.user-r-name{
-  font-weight: 600;
-  font-size: 20px;  
-  text-align: left;
-}
-.user-post-footer{
-  padding: 20px;
-  margin-right: 0 !important;
-  margin-left: 0 !important;
-  background-color: white;
-}
-.caption-style-1{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; 
-  height:3em;
-  -webkit-box-orient: vertical;
-  margin-bottom: 0px;
-}
-.caption-style-2{
-  display: -webkit-box;
-  margin-bottom: 0px;
-}
+  }
+  .post-image-container{
+      text-align: center;
+      background-color: #FAFAFA;
+  }
+  .post-image{
+    border-radius: 20px;
+    box-shadow: -5px 5px 20px #8888;
+  }
+  .heading-container{
+    font-family: Raleway;
+    padding: 10px;
+    background-color: white;
+  }
+  .post-footer{
+    margin-top: 20px;
+    padding: 20px;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    background-color: white;
+  }
+  .add-book-container{
+    text-align: center;
+    margin-top: 15px;
+  }
+  .post-book-name{
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    height:2.3em;
+    -webkit-box-orient: vertical;
+    font-size: 20px;
+  }
+  .post-book-author{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    height:2.3em;
+    -webkit-box-orient: vertical;
+    font-size: 17px;
+  }
+  .a-tag-post{
+    color: black !important;
+    text-decoration: none !important;
+  }
+  .user-recom-footer{
+    padding: 20px;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    background-color: white;
+  }
+  .image-user-r{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+  .user-r-name{
+    font-weight: 600;
+    font-size: 20px;  
+    text-align: left;
+  }
+  .user-post-footer{
+    padding: 20px;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    background-color: white;
+  }
+  .caption-style-1{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    height:3em;
+    -webkit-box-orient: vertical;
+    margin-bottom: 0px;
+  }
+  .caption-style-2{
+    display: -webkit-box;
+    margin-bottom: 0px;
+  }

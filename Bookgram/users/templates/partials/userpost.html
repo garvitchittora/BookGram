@@ -1,0 +1,49 @@
+<div class="col-lg-6">
+    <div class="container post-container">
+        <div class="heading-container">
+            <div>
+                <a class="a-tag-post" href="#">
+                    <h3 class="post-book-name">Book Name</h3>
+                </a>
+            </div>
+            <div>
+                <a class="a-tag-post" href="#">
+                <h5 class="post-book-author">Author Name</h5>
+                </a>
+                <!-- {% for day in session_data.temp %}
+                                            {{day}}
+                                            {% if not forloop.last %} 
+                                            ,
+                                            {% endif %}
+                                        {% endfor %} -->
+            </div>
+        </div>
+        
+        <div class="post-image-container">
+            <img class="post-image" src="http://books.google.com/books/content?id=uHs7gpNKqTEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/>
+        </div>
+        <div class="user-post-footer">
+            <div style="text-align: left;padding: 0 30px;">
+                <p class="caption-style-1" id="caption">
+                    Lorem ipsum dolor sitLorem ipsum dolor sitLorem ipsum dolor sitLorem ipsum dolor sit amet, consectetur adipiscing 
+                    elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scel
+                </p>
+                <a onclick="myFunction(this)" id="myBtn" style="cursor: pointer;color:#FFB1B9;">more</a>
+                <span id="dots" style="cursor: pointer;color:#FFB1B9;"></span>
+            </div>
+            <div>
+                <div class="rateYo" style="margin: auto;padding: 3px;"></div>
+            </div>
+            <div class="add-book-container">
+                <div class="button_cont"><a class="example_f" href="#" target="_blank" rel="nofollow"><span>Add Book</a></div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(".rateYo").rateYo({
+                rating: "4",
+                readOnly: true,
+                starWidth: "18px"
+            });
+        </script>
+    </div>
+</div>
