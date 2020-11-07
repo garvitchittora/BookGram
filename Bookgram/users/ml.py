@@ -37,8 +37,8 @@ from io import BytesIO
 from collections import Counter
 
 
-df_ratings = pd.read_csv('../../dataset/ratings.csv')
-df_books = pd.read_csv('../../dataset/books.csv')
+df_ratings = pd.read_csv('./dataset/ratings.csv')
+df_books = pd.read_csv('./dataset/books.csv')
 
 print(df_ratings.head(10))
 print(df_books.head(10))
@@ -50,10 +50,10 @@ print(books_df)
 print(df_ratings.shape," ",books_df.shape)
 print(df_books.columns)
 
-book_tags = pd.read_csv('../../dataset/book_tags.csv')
+book_tags = pd.read_csv('./dataset/book_tags.csv')
 print(book_tags.head())
 
-tags = pd.read_csv('../../dataset/tags.csv')
+tags = pd.read_csv('./dataset/tags.csv')
 print(tags)
 
 merge_tags = pd.merge(book_tags, tags, left_on='tag_id',
