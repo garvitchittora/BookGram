@@ -15,7 +15,7 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 import requests
 import json
-# from .ml import recom_list_combined
+from .ml import recom_list_combined
 
 def getUserWithSimilarBook(user):
     userAll= User.objects.all()
@@ -40,31 +40,33 @@ def home(request):
         listName=[]
         for book in books:
             listName.append(book.title)
-
-        # recom_book = recom_list_combined(listName)
+        
+        recom_book = recom_list_combined(listName)
         
         dataBook=[]
-        # if recom_book and len(recom_book)>0:
-        #     for book in recom_book:
-        #         data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+book).json()
-        #         if "items" in data:
-        #             data=data["items"]
-        #             if len(data)>=0 :
-        #                 data=data[0]
-        #                 obj={"name":"","authors":"","image":"","bookid":"","rating":"0"}
-        #                 obj["name"]=data["volumeInfo"]["title"]
-        #                 obj["bookid"]=data["id"]
-        #                 obj["authors"]=data["volumeInfo"]["authors"]
-        #                 obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
-        #                 if 'averageRating' in data["volumeInfo"]:
-        #                     obj["rating"]=str(data["volumeInfo"]["averageRating"])
-        #                 dataBook.append(obj)
+        if recom_book and len(recom_book)>0:
+            for book in recom_book:
+                data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+book).json()
+                if "items" in data:
+                    data=data["items"]
+                    if len(data)>=0 :
+                        data=data[0]
+                        obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":"","rating":"0"}
+                        obj["name"]=data["volumeInfo"]["title"]
+                        obj["bookid"]=data["id"]
+                        if  "authors" in data["volumeInfo"]:
+                            obj["authors"]=data["volumeInfo"]["authors"]
+                        if "imageLinks" in data["volumeInfo"]:
+                            obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                        if 'averageRating' in data["volumeInfo"]:
+                            obj["rating"]=str(data["volumeInfo"]["averageRating"])
+                        dataBook.append(obj)
 
         if request.method == 'POST':
             x = request.POST["name"]
 
             #TODO change this to index.html and remove other comments
-        return render(request, "staticIndex.html",{"string":x,"user":user,"recommendedUsers":recommendedUsers,"recom_book":dataBook})
+        return render(request, "index.html",{"string":x,"user":user,"recommendedUsers":recommendedUsers,"recom_book":dataBook})
 
 def login(request):
     if request.user.is_authenticated:
@@ -177,10 +179,12 @@ def userProfile(request,slug):
                 data=data["items"]
                 if len(data)>=0 :
                     data=data[0]
-                    obj={"name":"","authors":"","image":"","caption":post.caption,"bookid":post.bookid,"rating":"0"}
+                    obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","caption":post.caption,"bookid":post.bookid,"rating":"0"}
                     obj["name"]=data["volumeInfo"]["title"]
-                    obj["authors"]=data["volumeInfo"]["authors"]
-                    obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                    if  "authors" in data["volumeInfo"]:
+                        obj["authors"]=data["volumeInfo"]["authors"]
+                    if "imageLinks" in data["volumeInfo"]:
+                        obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
                     if 'averageRating' in data["volumeInfo"]:
                         obj["rating"]=str(data["volumeInfo"]["averageRating"])
                     dataPosts.append(obj)
