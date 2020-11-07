@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import sklearn
 import matplotlib.pyplot as plt
-%matplotlib inline
+# %matplotlib inline
 import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
