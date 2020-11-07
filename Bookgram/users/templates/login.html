@@ -1,11 +1,5 @@
 {% load static %}
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="{% static 'css/styles.css'%}" />
-<link rel="stylesheet" href="{% static 'dist/bootstrap.min.css'%}" />
-<link
-  href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
-  rel="stylesheet"
-/>
+{% include "header.html" %}
 <div class="loginPage">
   <div>
     <div class="loginCard">
@@ -13,7 +7,7 @@
         <h1>Login</h1>
         <h3>Find some new books</h3>
       </div>
-      <div class="auth-div" id="login-div">
+      <div class="loginForm">
         <form method="POST">
             {% csrf_token %}
           <div class="form-group">
@@ -50,3 +44,4 @@
     </div>
   </div>
 </div>
+{% include "footer.html" %}

@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}" />
+    <link rel="stylesheet" href="{% static 'dist/bootstrap.min.css'%}" />
+    <link rel="icon" href="https://images.vexels.com/media/users/3/136492/isolated/preview/9405e34df4de152cba0e31c040f5675e-open-book-round-icon-by-vexels.png">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
+      rel="stylesheet"
+    />
+    <title>BookGram</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" id="main-navbar">
+        <a class="navbar-brand home-link" href="/home">
+            <img src="https://images.vexels.com/media/users/3/136492/isolated/preview/9405e34df4de152cba0e31c040f5675e-open-book-round-icon-by-vexels.png" width="25" height="25" class="d-inline-block mb-1" alt="">
+            BookGram</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/search">Find books</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!-- if(!currentUser){ -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Register<span class="sr-only">(current)</span></a>
+                </li>
+                 <!-- } else { -->
+                <li class="nav-item px-lg-2 d-flex logged-in-as">
+                    <img src="https://images.vexels.com/media/users/3/136492/isolated/preview/9405e34df4de152cba0e31c040f5675e-open-book-round-icon-by-vexels.png" class="align-self-center" id="display-picture">
+                    <a class="nav-link">Logged in as Username</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+    </nav>
