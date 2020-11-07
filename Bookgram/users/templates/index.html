@@ -1,10 +1,10 @@
 {% load static %}
 <form method="POST">
-    {% csrf_token %}
-    <input type="text" name="name" placeholder="text">
-    <input type="submit" value="Submit" />
+  {% csrf_token %}
+  <input type="text" name="name" placeholder="text" />
+  <input type="submit" value="Submit" />
 </form>
 
-<img src="{{request.user.image.url}}" alt="image">
-{{string}}
-{{recommendedUsers}}
+{% if request.user.image %}
+<img src="{{request.user.image.url}}" alt="image" />
+{% endif%} {{string}} {{recommendedUsers}}
