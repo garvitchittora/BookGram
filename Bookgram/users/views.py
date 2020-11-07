@@ -118,12 +118,8 @@ def activate(request, uidb64, token):
 
 def userProfile(request,slug):
     print(slug)
-    x = ""
-    if request.method == 'POST':
-        x = request.POST["name"]
-        
     
-    return render(request, "index.html",{"string":x})
+    return render(request, "userProfile.html",{})
 
 def bookPage(request,slug):
     print(slug)
