@@ -31,21 +31,27 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <!-- if(!currentUser){ -->
+                {% if request.user.is_authenticated %}
+                <li class="nav-item px-lg-2 d-flex logged-in-as">
+                    <a href="user/{{request.user.slug}}">
+                        {% if request.user.image %}
+                            <img src="{{request.user.image.url}}" class="align-self-center" id="display-picture">
+                        {% endif%}
+                        <span class="nav-link" style="display: inline-block;">{{request.user.get_full_name}}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register">Register<span class="sr-only">(current)</span></a>
                 </li>
-                 <!-- } else { -->
-                <li class="nav-item px-lg-2 d-flex logged-in-as">
-                    <img src="https://images.vexels.com/media/users/3/136492/isolated/preview/9405e34df4de152cba0e31c040f5675e-open-book-round-icon-by-vexels.png" class="align-self-center" id="display-picture">
-                    <a class="nav-link">Logged in as Username</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-item nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
-                </li>
+                {% endif %}
             </ul>
     </nav>
     {% block body %}
