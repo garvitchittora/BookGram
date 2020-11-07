@@ -57,8 +57,8 @@
                                         <div class="add-book-container">
                                             <form method="POST">
                                                 {% csrf_token %}
-                                                <input type="hidden" name="id" value="{{post.name}}">
-                                                <input type="hidden" name="title" value="{{post.bookid}}">
+                                                <input type="hidden" name="id" value="{{post.bookid}}">
+                                                <input type="hidden" name="title" value="{{post.name}}">
                                                 <div class="button_cont"><button type="submit" class="example_f" target="_blank" rel="nofollow"><span>Add Book</button></div>
                                             </form>
                                         </div>

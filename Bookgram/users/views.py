@@ -134,11 +134,15 @@ def userProfile(request,slug):
         books = user.books.all() 
 
         if request.method == 'POST':
-            id=request.POST["id"]
+            bookid=request.POST["id"]
             title=request.POST["title"]     
-            if books.filter(bookid=id).count()==0:
-                print("new")
+            if books.filter(bookid=bookid).count()==0:
+                book=Book(title = title,bookid=bookid)
+                book.save()
+                user.books.add(book)
+                user.save()
 
+        books = user.books.all() 
         dataPosts=[]
         for post in posts:
             data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+post.bookid).json()
