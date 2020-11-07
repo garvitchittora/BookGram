@@ -3,21 +3,21 @@ import sys
 import numpy as np
 import pandas as pd
 import sklearn
-import matplotlib.pyplot as plt
-%matplotlib inline
-import seaborn as sns
+# import matplotlib.pyplot as plt
+# %matplotlib inline
+# import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
-import keras
-from keras.models import Sequential, Model
-from keras.layers import Dense, Input
-from keras.utils import plot_model
-from keras.layers import Flatten, Embedding
-from keras.layers.convolutional import Conv2D
-from keras.layers.pooling import MaxPooling2D
-from keras.layers.recurrent import LSTM
-from keras.layers import Concatenate, Dot
-from keras.optimizers import Adam
+# import keras
+# from keras.models import Sequential, Model
+# from keras.layers import Dense, Input
+# from keras.utils import plot_model
+# from keras.layers import Flatten, Embedding
+# from keras.layers.convolutional import Conv2D
+# from keras.layers.pooling import MaxPooling2D
+# from keras.layers.recurrent import LSTM
+# from keras.layers import Concatenate, Dot
+# from keras.optimizers import Adam
 
 import datetime
 from scipy import stats
@@ -80,21 +80,22 @@ def authors_recom(title, n):
     
     return list(titles.iloc[book_indices])
 
-list1=['Romeo and Juliet','The Hobbit']
-for name in list1:
+# list1=['Romeo and Juliet','The Hobbit']
+def list_to_underscore_list(list_space):
+    list_underscore=[]
+    for i in list_space:
+        j= '_'.join(i.split(' '))
+        list_underscore.append(j)
+
+    return list_underscore
     
-    recom=authors_recom(name, 10)
-
-
-    def list_to_underscore_list(recom):
-        recom_list_underscore=[]
-        for i in recom:
-            j= '_'.join(i.split(' '))
-            recom_list_underscore.append(j)
-
-        return recom_list_underscore
-
-    print(list_to_underscore_list(recom))
+def recom_list_auth(list1):
+    for name in list1:
+        recom=authors_recom(name, 10)
+        list_out=list_to_underscore_list(recom)
+        print (list_out)
+    
+recom_list_auth(list1)
 
 book_tags = pd.merge(df_books, merge_tags, left_on='book_id',
                      right_on='goodreads_book_id', how='inner')
@@ -113,21 +114,22 @@ def tags_recom(title, n):
     
     return list(titles.iloc[book_indices])
 
-list1=['Romeo and Juliet','The Hobbit']
-for name in list1:
+# list1=['Romeo and Juliet','The Hobbit']
+def list_to_underscore_list(list_space):
+    list_underscore=[]
+    for i in list_space:
+        j= '_'.join(i.split(' '))
+        list_underscore.append(j)
+
+    return list_underscore
     
-    recom_tag=tags_recom(name, 10)
-
-
-    def list_to_underscore_list(recom_tag):
-        recom_list_underscore=[]
-        for i in recom_tag:
-            j= '_'.join(i.split(' '))
-            recom_list_underscore.append(j)
-
-        return recom_list_underscore
-
-    print(list_to_underscore_list(recom_tag))
+def recom_list_tags(list1):
+    for name in list1:
+        recom=tags_recom(name, 10)
+        list_out=list_to_underscore_list(recom)
+        print (list_out)
+    
+recom_list_tags(list1)
 
 auth_book_tags = book_tags.groupby('book_id')['tag_name'].apply(' '.join).reset_index()
 print(auth_book_tags)
@@ -155,18 +157,20 @@ def combined_recom(title, n):
     
     return list(titles.iloc[book_indices])
 
-list1=['Romeo and Juliet','The Hobbit']
-for name in list1:
+# list1=['Romeo and Juliet','The Hobbit']
+def list_to_underscore_list(list_space):
+    list_underscore=[]
+    for i in list_space:
+        j= '_'.join(i.split(' '))
+        list_underscore.append(j)
+
+    return list_underscore
     
-    recom=authors_recom(name, 10)
+def recom_list_combined(list1):
+    for name in list1:
+        recom=combined_recom(name, 10)
+        list_out=list_to_underscore_list(recom)
+        print (list_out)
+    
+recom_list_combined(list1)
 
-
-    def list_to_underscore_list(recom_combined):
-        recom_list_underscore=[]
-        for i in recom_combined:
-            j= '_'.join(i.split(' '))
-            recom_list_underscore.append(j)
-
-        return recom_list_underscore
-
-    print(list_to_underscore_list(recom_combined))

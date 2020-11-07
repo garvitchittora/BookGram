@@ -1,4 +1,6 @@
 {% load static %}
+{% include "header.html" %}
+{% block body %}
 <form method="POST">
   {% csrf_token %}
   <input type="text" name="name" placeholder="text" />
@@ -8,3 +10,4 @@
 {% if request.user.image %}
 <img src="{{request.user.image.url}}" alt="image" />
 {% endif%} {{string}} {{recommendedUsers}}
+{% endblock %}
