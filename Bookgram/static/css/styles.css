@@ -109,3 +109,16 @@ body {
   height: 4rem;
   border-radius: 50%;
 }
+
+.profile{
+  padding: 5rem 10rem;
+}
+
+.profile-hero{
+  align-items: center;
+}
+
+.profile-hero img{
+  width: 15rem;
+  height: 15rem;
+}
