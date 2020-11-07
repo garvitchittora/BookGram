@@ -23,6 +23,8 @@ df_ratings = pd.read_csv('./dataset/ratings.csv')
 df_books = pd.read_csv('./dataset/books.csv')
 book_tags = pd.read_csv('./dataset/book_tags.csv')
 tags = pd.read_csv('./dataset/tags.csv')
+book = pd.read_csv('./dataset/books.csv')
+
 tag_books = book_tags
 books_df = df_books
 
@@ -64,7 +66,7 @@ def authors_recom(title, n):
     
 def recom_list_auth(list1):
     for name in list1:
-        if name in df_books.original_title.values:
+        if name in book.title.values:
             recom=authors_recom(name, 10)
             list_out=list_to_underscore_list(recom)
             print (list_out)
@@ -93,7 +95,7 @@ def tags_recom(title, n):
     
 def recom_list_tags(list1):
     for name in list1:
-        if name in df_books.original_title.values:
+        if name in book.title.values:
             recom=tags_recom(name, 10)
             list_out=list_to_underscore_list(recom)
             print (list_out)
@@ -131,7 +133,7 @@ def combined_recom(title, n):
     
 def recom_list_combined(list1):
     for name in list1:
-        if name in df_books.original_title.values:
+        if name in book.title.values:
             recom=combined_recom(name, 10)
             list_out=list_to_underscore_list(recom)
             print (list_out)
