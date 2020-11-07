@@ -19,10 +19,10 @@ from io import BytesIO
 from collections import Counter
 
 
-df_ratings = pd.read_csv('../input/goodbooks-10k/ratings.csv')
-df_books = pd.read_csv('../input/goodbooks-10k/books.csv')
-book_tags = pd.read_csv('../input/goodbooks-10k/book_tags.csv')
-tags = pd.read_csv('../input/goodbooks-10k/tags.csv')
+df_ratings = pd.read_csv('../../dataset/ratings.csv')
+df_books = pd.read_csv('../../dataset/books.csv')
+book_tags = pd.read_csv('../../dataset/book_tags.csv')
+tags = pd.read_csv('../../dataset/tags.csv')
 tag_books = book_tags
 books_df = df_books
 
