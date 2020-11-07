@@ -32,7 +32,7 @@ import re
 import string
 import random
 from PIL import Image
-import requests
+# import requests
 from io import BytesIO
 from collections import Counter
 
@@ -173,4 +173,3 @@ def recom_list_combined(list1):
         print (list_out)
     
 recom_list_combined(list1)
-
