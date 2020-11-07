@@ -40,7 +40,7 @@ def home(request):
         listName=[]
         for book in books:
             listName.append(book.title)
-
+        
         recom_book = recom_list_combined(listName)
         
         dataBook=[]
@@ -51,11 +51,13 @@ def home(request):
                     data=data["items"]
                     if len(data)>=0 :
                         data=data[0]
-                        obj={"name":"","authors":"","image":"","bookid":"","rating":"0"}
+                        obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":"","rating":"0"}
                         obj["name"]=data["volumeInfo"]["title"]
                         obj["bookid"]=data["id"]
-                        obj["authors"]=data["volumeInfo"]["authors"]
-                        obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                        if  "authors" in data["volumeInfo"]:
+                            obj["authors"]=data["volumeInfo"]["authors"]
+                        if "imageLinks" in data["volumeInfo"]:
+                            obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
                         if 'averageRating' in data["volumeInfo"]:
                             obj["rating"]=str(data["volumeInfo"]["averageRating"])
                         dataBook.append(obj)
@@ -176,10 +178,12 @@ def userProfile(request,slug):
                 data=data["items"]
                 if len(data)>=0 :
                     data=data[0]
-                    obj={"name":"","authors":"","image":"","caption":post.caption,"bookid":post.bookid,"rating":"0"}
+                    obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","caption":post.caption,"bookid":post.bookid,"rating":"0"}
                     obj["name"]=data["volumeInfo"]["title"]
-                    obj["authors"]=data["volumeInfo"]["authors"]
-                    obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                    if  "authors" in data["volumeInfo"]:
+                        obj["authors"]=data["volumeInfo"]["authors"]
+                    if "imageLinks" in data["volumeInfo"]:
+                        obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
                     if 'averageRating' in data["volumeInfo"]:
                         obj["rating"]=str(data["volumeInfo"]["averageRating"])
                     dataPosts.append(obj)

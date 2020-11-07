@@ -132,11 +132,14 @@ def combined_recom(title, n):
 
     
 def recom_list_combined(list1):
+    listfinal=[]
+
     for name in list1:
         if name in book.title.values:
             recom=combined_recom(name, 10)
             list_out=list_to_underscore_list(recom)
-            print (list_out)
         else:
-            print([])
+            list_out=[]
+        listfinal.extend(list_out)
         
+    return listfinal   
