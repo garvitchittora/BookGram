@@ -15,7 +15,7 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 import requests
 import json
-from ml import recom_list_combined
+from .ml import recom_list_combined
 
 def getUserWithSimilarBook(user):
     userAll= User.objects.all()
@@ -35,10 +35,35 @@ def home(request):
         x = ""
         user= request.user
         recommendedUsers = getUserWithSimilarBook(user)
+        books = user.books.all()
+        
+        listName=[]
+        for book in books:
+            listName.append(book.title)
+
+        recom_book = recom_list_combined(listName)
+        
+        dataBook=[]
+        if recom_book and len(recom_book)>0:
+            for book in recom_book:
+                data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+book).json()
+                if "items" in data:
+                    data=data["items"]
+                    if len(data)>=0 :
+                        data=data[0]
+                        obj={"name":"","authors":"","image":"","bookid":"","rating":"0"}
+                        obj["name"]=data["volumeInfo"]["title"]
+                        obj["bookid"]=data["id"]
+                        obj["authors"]=data["volumeInfo"]["authors"]
+                        obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                        if 'averageRating' in data["volumeInfo"]:
+                            obj["rating"]=str(data["volumeInfo"]["averageRating"])
+                        dataBook.append(obj)
+
         if request.method == 'POST':
             x = request.POST["name"]
             
-        return render(request, "index.html",{"string":x,"user":user,"recommendedUsers":recommendedUsers})
+        return render(request, "index.html",{"string":x,"user":user,"recommendedUsers":recommendedUsers,"recom_book":dataBook})
 
 def login(request):
     if request.user.is_authenticated:
@@ -129,7 +154,7 @@ def userProfile(request,slug):
     if request.user.is_authenticated:
         user=request.user
         name=user.get_full_name()
-        followersNumber=bhai kya user.followers.count()
+        followersNumber=user.followers.count()
         followingNumber=user.user_set.all().count()
         posts = user.post_set.all() 
         books = user.books.all() 
