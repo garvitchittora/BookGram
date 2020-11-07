@@ -147,3 +147,22 @@ right: 0;
   font-size: 20px;  
   text-align: left;
 }
+.user-post-footer{
+  padding: 20px;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  background-color: white;
+}
+.caption-style-1{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  height:3em;
+  -webkit-box-orient: vertical;
+  margin-bottom: 0px;
+}
+.caption-style-2{
+  display: -webkit-box;
+  margin-bottom: 0px;
+}
