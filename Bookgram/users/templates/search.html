@@ -1,6 +1,5 @@
 {% include "partials/header.html" %}
 {% block body %}
-    
     <h1 id="your-books" style="display: none;">Your Books
         <form method="POST" style="display: inline-block;">
             {% csrf_token %}
@@ -62,7 +61,7 @@
                 tab+='<ul class="col-sm-4 books-list">' +
                         '<li maxlength=15><h4>'+ r.volumeInfo.title.substring(0,25)+ '</h4></li>'+
                         '<li><img src=' + r.volumeInfo.imageLinks.thumbnail + ' style="width:150px; height:200px"></li>' +
-                        '<li><button type="button" class="example_f" onclick=\"(canLaunch(\'' + m1 +','+ n1 +' ,'+ x1 + '\'))"\ id="'+r.id+'">Add to Fav</button></li>'+
+                        '<li><button type="button" class="example_f" onclick=\"(canLaunch(\'' + m1 +','+ n1 +' ,'+ x1 + '\'))"\ id="'+r.id+'">Add Book</button></li>'+
                     '</ul>'
 
             }
