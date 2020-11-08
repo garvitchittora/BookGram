@@ -4,22 +4,31 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css" rel="stylesheet"/> 
-<section class="details-page container-fluid">
-    <div class="row p-2">
+<section class="details-page">
+    <div class="row p-1 d-flex justify-content-around">
         <div class="col-8">
             <div class="post-container post-details-container m-0">
                 <div class="heading-container">
                     <div>
-                        <h3 class="post-book-name display-3">{{obj.name}}</h3>
+                        <a class="a-tag-post" href="#">
+                            <h2 class="post-book-name">{{obj.name}}</h2>
+                        </a>
                     </div>
                     <div>
-                        <h2 class="post-book-author">
-                        {% for author in obj.authors %}
+                        <a class="a-tag-post" href="#">
+                        <h3 class="post-book-author">{% for author in obj.authors %}
                             {{author}}
                             {% if not forloop.last %} 
                             ,
                             {% endif %}
-                        {% endfor %}</h2>
+                        {% endfor %</h3>
+                        </a>
+                        <!-- {% for day in session_data.temp %}
+                                                    {{day}}
+                                                    {% if not forloop.last %} 
+                                                    ,
+                                                    {% endif %}
+                                                {% endfor %} -->
                     </div>
                 </div>
                 
@@ -59,7 +68,8 @@
                 </script>
             </div>
         </div>
-        <div class="col-4 recent__books">
+
+        <div class="col-3 recent__books">
             <h2>Recommended Books</h2>
             {% for book in dataBook %}
             <div class="recent__books-main">
