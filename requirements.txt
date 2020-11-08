@@ -45,7 +45,7 @@ scipy==1.4.1
 seaborn==0.10.0
 six==1.15.0
 sklearn==0.0
-sklearn-contrib-py-earth==0.1.0+1.gdde5f89
+# sklearn-contrib-py-earth==0.1.0+1.gdde5f89
 sklearn-pandas==2.0.2
 sortedcollections==1.1.2
 sortedcontainers==2.2.2

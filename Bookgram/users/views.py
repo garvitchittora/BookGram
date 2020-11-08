@@ -301,8 +301,17 @@ def searchUser(request):
     return render(request, "usersearch.html",{"users":users})    
 
 def compose(request):
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            bookname=request.POST["search"]
+            bookid=request.POST["id"]
+            bookcaption=request.POST["caption"]
+            post=Post(user=request.user,caption=bookcaption,bookid=bookid)
+            post.save()
 
-    return render(request, "compose.html",{})    
+        return render(request, "compose.html")    
+    else:
+        return redirect("/login")
 
 def searchBook(request):
     if request.method == 'POST':
