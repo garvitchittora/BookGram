@@ -19,6 +19,13 @@
               name="search"
               oninput="reFunc()"
             />
+            <input
+              type="hidden"
+              id="inp_id"
+              class="form-control"
+              aria-describedby="emailHelp"
+              name="id"
+            />
           </div>
           <div id="list" class="row"></div>
           <div class="form-group">
@@ -79,24 +86,9 @@
     function canLaunch(m)
     {   
         var m2 = m.split(",");
-        console.log(m2);
-        var inputValue=$("#booklist").val();
-        var inputTitle=$("#booktitle").val();
-        if(inputValue!=""){
-            inputvalue=inputvalue+"+"+m2[2];
-            inputTitle=inputTitle+"+"+m2[0];
-        }else{
-            inputvalue=m2[2];
-            inputTitle=m2[0];
-        }
-        $("#booklist").val(inputvalue);
-        $("#booktitle").val(inputTitle);
-        
-        document.getElementById('your-books').style.display="block";
-        tab1+='<ul class="col-sm-3 ybks-list"><li><h5>'+ m2[0].substring(0,25) + '</li></h5>' + '<li><img src=' + m2[1] + ' style="width:80px; height:120px" class="your-bks-img"></li></ul>';
-
-        document.getElementById("stored-section").innerHTML = tab1; 
-
+        $('#inp_text').val(m2[0]);
+        $('#inp_id').val(m2[2]);
+        $('.books-list').css("display", "none");
     }
 
 </script>
