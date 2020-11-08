@@ -2,7 +2,7 @@
 {% block body %}
 <div class="loginPage">
   <div>
-    <div class="loginCard my-1">
+    <div class="composeCard my-1">
       <div class="loginText">
         <h1>New post</h1>
         <h3>Share something with others</h3>
@@ -12,12 +12,15 @@
           <div class="form-group">
             <label>Select a book</label>
             <input
-              type="email"
+              type="text"
+              id="inp_text"
               class="form-control"
               aria-describedby="emailHelp"
-              name="email"
+              name="search"
+              oninput="reFunc()"
             />
           </div>
+          <div id="list" class="row"></div>
           <div class="form-group">
             <label>Your thoughts...</label>
             <textarea
@@ -33,4 +36,69 @@
     </div>
   </div>
 </div>
+
+<script>
+    async function getapi() { 
+
+        const ttl = document.getElementById('inp_text').value;
+        const response = await fetch("https://www.googleapis.com/books/v1/volumes?q="+ttl + "&maxResults=6"); 
+        
+        // Storing data in form of JSON 
+        var data = await response.json(); 
+        // console.log(data.items);
+        addData(data)
+        } 
+    // getapi();
+
+    function reFunc()
+    {
+        getapi();
+    }
+
+    function addData(data)
+    {
+        let tab =  '<div></div>';
+
+        for(let r of data.items)
+        {
+
+            var m1 = r.volumeInfo.title;
+            var x1 = r.id;
+            var n1 = r.volumeInfo.imageLinks.thumbnail;
+            tab+='<ul class="col-sm-4 books-list">' +
+                    '<li maxlength=15><h4>'+ r.volumeInfo.title.substring(0,25)+ '</h4></li>'+
+                    '<li><img src=' + r.volumeInfo.imageLinks.thumbnail + ' style="width:150px; height:200px"></li>' +
+                    '<li><button type="button" class="example_f" onclick=\"(canLaunch(\'' + m1 +','+ n1 +' ,'+ x1 + '\'))"\ id="'+r.id+'">Select</button></li>'+
+                '</ul>'
+
+        }
+        document.getElementById("list").innerHTML = tab; 
+    }
+    
+    let tab1 =  '<div></div>';
+    function canLaunch(m)
+    {   
+        var m2 = m.split(",");
+        console.log(m2);
+        var inputValue=$("#booklist").val();
+        var inputTitle=$("#booktitle").val();
+        if(inputValue!=""){
+            inputvalue=inputvalue+"+"+m2[2];
+            inputTitle=inputTitle+"+"+m2[0];
+        }else{
+            inputvalue=m2[2];
+            inputTitle=m2[0];
+        }
+        $("#booklist").val(inputvalue);
+        $("#booktitle").val(inputTitle);
+        
+        document.getElementById('your-books').style.display="block";
+        tab1+='<ul class="col-sm-3 ybks-list"><li><h5>'+ m2[0].substring(0,25) + '</li></h5>' + '<li><img src=' + m2[1] + ' style="width:80px; height:120px" class="your-bks-img"></li></ul>';
+
+        document.getElementById("stored-section").innerHTML = tab1; 
+
+    }
+
+</script>
+
 {% endblock %}
