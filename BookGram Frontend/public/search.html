@@ -14,7 +14,7 @@
     
     <h1 id="your-books" style="display: none;">Your Books</h1>
     <hr>
-    <div id="stored-section" class="row">
+    <div id="stored-section" class="row container">
     </div>
 
    <div class="container search-box">
@@ -65,7 +65,7 @@
                 tab+='<ul class="col-sm-3 books-list">' +
                         '<li maxlength=15><h4>'+ r.volumeInfo.title.substring(0,25)+ '</h4></li>'+
                         '<li><img src=' + r.volumeInfo.imageLinks.thumbnail + ' style="width:150px; height:200px"></li>' +
-                        '<li><button type="button" class="example_f" onclick=\"(canLaunch(\'' + m1 +','+ n1 + '\'))"\ id="'+r.id+'">Submit</button></li>'+
+                        '<li><button type="button" class="example_f" onclick=\"(canLaunch(\'' + m1 +','+ n1 + '\'))"\ id="'+r.id+'">Add to Fav</button></li>'+
                     '</ul>'
 
             }
@@ -79,7 +79,7 @@
             console.log(typeof(m));
             document.getElementById('your-books').style.display="block";
             var m2 = m.split(",");
-            tab1+='<ul class="col-sm-3 ybks-list"><li><h5>'+ m2[0] + '</li></h5>' + '<li><img src=' + m2[1] + ' style="width:80px; height:120px" class="your-bks-img"></li></ul>';
+            tab1+='<ul class="col-sm-3 ybks-list"><li><h5>'+ m2[0].substring(0,25) + '</li></h5>' + '<li><img src=' + m2[1] + ' style="width:80px; height:120px" class="your-bks-img"></li></ul>';
 
             document.getElementById("stored-section").innerHTML = tab1; 
 

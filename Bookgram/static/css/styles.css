@@ -125,8 +125,8 @@ body {
 
 .recent__books{
   background-color: #f8f9fd;
-  border-radius: 2rem;
-  padding: 2rem 10rem;
+  border-radius: 1.5rem;
+  padding: 1rem 6rem;
   text-align: center;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
@@ -137,12 +137,12 @@ body {
 }
 
 .book{
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   background-color: rgb(227, 245, 238);
   justify-content: space-around;
   align-items: center;
-  border-radius: 1rem;
-  padding: 1rem 0;
+  border-radius: .8rem;
+  padding: .8rem 0;
 }
 
 .book img{
@@ -165,6 +165,11 @@ body {
   cursor: pointer;
   margin: 5px;
   }
+
+  .example_f:focus{
+    outline: none;
+  }
+
   .example_f span {
   cursor: pointer;
   display: inline-block;
@@ -207,9 +212,10 @@ body {
   .post-image-container{
       text-align: center;
       background-color: #FAFAFA;
+      padding: 2rem 0;
   }
   .post-image{
-    height: 30rem;
+    height: 26rem;
     border-radius: 20px;
     box-shadow: -5px 5px 20px #8888;
   }
@@ -259,8 +265,8 @@ body {
   }
   .image-user-r{
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
   }
   .user-r-name{
     font-weight: 600;
@@ -278,22 +284,22 @@ body {
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2; 
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     /* height:3em; */
     -webkit-box-orient: vertical;
     margin-bottom: 0px;
   }
   .caption-style-2{
-    font-size: 1.2rem;
+    font-size: 1rem;
     display: -webkit-box;
     margin-bottom: 0;
   }
 
   .caption-style-3{
-    font-size: 1.6rem;
-    margin: 1.3rem 0;
+    font-size: 1.4rem;
+    margin: 1rem 0;
   }
 
   .details-page{
-    margin-top: 8rem;
+    margin-top: 6rem;
   }

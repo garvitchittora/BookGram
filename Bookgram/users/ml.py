@@ -65,13 +65,18 @@ def authors_recom(title, n):
 
     
 def recom_list_auth(list1):
+    list_output=[]
+    
     for name in list1:
         if name in book.title.values:
             recom=authors_recom(name, 10)
             list_out=list_to_underscore_list(recom)
-            print (list_out)
         else:
-            print([])
+            list_out=[]
+            
+        list_output.extend(list_out)
+        
+    return list_output
 
         
 book_tags = pd.merge(df_books, merge_tags, left_on='book_id',
@@ -94,13 +99,18 @@ def tags_recom(title, n):
 
     
 def recom_list_tags(list1):
+    list_output=[]
+    
     for name in list1:
         if name in book.title.values:
             recom=tags_recom(name, 10)
             list_out=list_to_underscore_list(recom)
-            print (list_out)
         else:
-            print([])
+            list_out=[]
+            
+        list_output.extend(list_out)
+        
+    return list_output
         
         
 auth_book_tags = book_tags.groupby('book_id')['tag_name'].apply(' '.join).reset_index()
@@ -132,7 +142,7 @@ def combined_recom(title, n):
 
     
 def recom_list_combined(list1):
-    listfinal=[]
+    list_output=[]
 
     for name in list1:
         if name in book.title.values:
@@ -140,6 +150,8 @@ def recom_list_combined(list1):
             list_out=list_to_underscore_list(recom)
         else:
             list_out=[]
-        listfinal.extend(list_out)
         
-    return listfinal   
+        list_output.extend(list_out)
+        
+    return list_output
+  
