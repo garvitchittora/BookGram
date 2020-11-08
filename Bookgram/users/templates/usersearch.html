@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="../dist/bootstrap.min.css" />
-    <link
-    href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
-    rel="stylesheet"
-    />
-</head>
-<body>
-    
+{% include "partials/header.html" %}
+{% block body %}
+<style>
+.example_f span:after {
+  content: '...';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+  }
+</style>
     <div class="container search-box">
         <div class="form-group">
             <input
@@ -20,8 +18,11 @@
               class="form-control"
               aria-describedby="emailHelp"
               name="email"
-              placeholder="Search Here"
+              placeholder="Search User Here"
             />
+            <div class="user-recom-footer">
+                <div class="button_cont" style="text-align: right;"><a class="example_f" href="#" target="_blank" rel="nofollow"><span>Search</a></div>
+            </div>
           </div>
        </div>
 
@@ -46,8 +47,4 @@
             </div>
         </div>
     </div>
-
-</body>
-</html>
-
-
+{% endblock %}
