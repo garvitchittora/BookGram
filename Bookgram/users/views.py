@@ -35,8 +35,19 @@ def home(request):
         x = ""
         user= request.user
         recommendedUsers = getUserWithSimilarBook(user)
+
         books = user.books.all()
+        if request.method == 'POST':
+            bookid=request.POST["id"]
+            title=request.POST["title"]     
+            if books.filter(bookid=bookid).count()==0:
+                book=Book(title = title,bookid=bookid)
+                book.save()
+                user.books.add(book)
+                user.save()
         
+        books = user.books.all()
+
         listName=[]
         for book in books:
             listName.append(book.title)
@@ -62,9 +73,6 @@ def home(request):
                             obj["rating"]=str(data["volumeInfo"]["averageRating"])
                         dataBook.append(obj)
 
-        if request.method == 'POST':
-            x = request.POST["name"]
-            
         return render(request, "index.html",{"string":x,"user":user,"recommendedUsers":recommendedUsers,"recom_book":dataBook})
 
 def login(request):
@@ -195,10 +203,12 @@ def userProfile(request,slug):
                 data=data["items"]
                 if len(data)>=0 :
                     data=data[0]
-                    obj={"name":"","authors":"","image":"","bookid":post.bookid,"rating":"0"}
+                    obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":post.bookid,"rating":"0"}
                     obj["name"]=data["volumeInfo"]["title"]
-                    obj["authors"]=data["volumeInfo"]["authors"]
-                    obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                    if  "authors" in data["volumeInfo"]:
+                        obj["authors"]=data["volumeInfo"]["authors"]
+                    if "imageLinks" in data["volumeInfo"]:
+                        obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
                     if 'averageRating' in data["volumeInfo"]:
                         obj["rating"]=str(data["volumeInfo"]["averageRating"])
                     dataBook.append(obj)
@@ -208,13 +218,52 @@ def userProfile(request,slug):
         return redirect("/login")     
 
 def bookDetails(request,slug):
-    print(slug)
-    x = ""
-    if request.method == 'POST':
-        x = request.POST["name"]
+    data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+slug).json()
+    if "items" in data:
+        data=data["items"]
+        if len(data)>=0 :
+            data=data[0]
+            obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":slug,"rating":"0","pageCount":"0","description":"","publishedDate":"","publisher":""}
+            obj["name"]=data["volumeInfo"]["title"]
+            if  "authors" in data["volumeInfo"]:
+                obj["authors"]=data["volumeInfo"]["authors"]
+            if "imageLinks" in data["volumeInfo"]:
+                obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+            if 'averageRating' in data["volumeInfo"]:
+                obj["rating"]=str(data["volumeInfo"]["averageRating"])
+            if  "pageCount" in data["volumeInfo"]:
+                obj["pageCount"]=data["volumeInfo"]["pageCount"]
+            if  "description" in data["volumeInfo"]:
+                obj["description"]=data["volumeInfo"]["description"]        
+            if  "publishedDate" in data["volumeInfo"]:
+                obj["publishedDate"]=data["volumeInfo"]["publishedDate"]  
+            if  "publisher" in data["volumeInfo"]:
+                obj["publisher"]=data["volumeInfo"]["publisher"]  
+
+    listrecom=[]
+    listrecom.append(obj["name"])
+    recom_book = recom_list_combined(listrecom)
         
-    
-    return render(request, "bookdetails.html",{"string":x})
+    dataBook=[]
+    if recom_book and len(recom_book)>0:
+        for book in recom_book:
+            data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+book).json()
+            if "items" in data:
+                data=data["items"]
+                if len(data)>=0 :
+                    data=data[0]
+                    obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":"","rating":"0"}
+                    obj["name"]=data["volumeInfo"]["title"]
+                    obj["bookid"]=data["id"]
+                    if  "authors" in data["volumeInfo"]:
+                        obj["authors"]=data["volumeInfo"]["authors"]
+                    if "imageLinks" in data["volumeInfo"]:
+                        obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                    if 'averageRating' in data["volumeInfo"]:
+                        obj["rating"]=str(data["volumeInfo"]["averageRating"])
+                    dataBook.append(obj)
+
+    return render(request, "bookdetails.html",{"dataBook":dataBook,"obj":obj})
 
 def searchUser(request):
     x = ""

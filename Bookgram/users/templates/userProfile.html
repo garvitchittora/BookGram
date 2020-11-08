@@ -24,12 +24,12 @@
                                 <div class="container post-container">
                                     <div class="heading-container">
                                         <div>
-                                            <a class="a-tag-post" href="#">
+                                            <a class="a-tag-post" href="/book/{{post.bookid}}">
                                                 <h3 class="post-book-name">{{post.name}}</h3>
                                             </a>
                                         </div>
                                         <div>
-                                            <a class="a-tag-post" href="#">
+                                            <a class="a-tag-post" href="/book/{{post.bookid}}">
                                             <h5 class="post-book-author">{% for author in post.authors %}
                                                 {{author}}
                                                 {% if not forloop.last %} 
@@ -104,15 +104,19 @@
                     <div class="book d-flex">
                         <img src="{{book.image}}" alt="Book">
                         <div class="recent__books-info">
-                            <h3>{{book.name}}</h3>
-                            <h4>
-                            {% for author in book.authors %}
-                                {{author}}
-                                {% if not forloop.last %} 
-                                ,
-                                {% endif %}
-                            {% endfor %}
-                            </h4>
+                            <a class="a-tag-post" href="/book/{{book.bookid}}">
+                                <h3 class="post-book-name">{{book.name}}</h3>
+                            </a>
+                            <a class="a-tag-post" href="/book/{{book.bookid}}">
+                                <h4>
+                                    {% for author in book.authors %}
+                                        {{author}}
+                                        {% if not forloop.last %} 
+                                        ,
+                                        {% endif %}
+                                    {% endfor %}
+                                </h4>
+                            </a>
                         </div>
                     </div>
                 </div>

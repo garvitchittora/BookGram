@@ -15,12 +15,12 @@
                 <div class="container post-container">
                     <div class="heading-container">
                         <div>
-                            <a class="a-tag-post" href="#">
+                            <a class="a-tag-post" href="/book/{{book.bookid}}">
                                 <h3 class="post-book-name">{{book.name}}</h3>
                             </a>
                         </div>
                         <div>
-                            <a class="a-tag-post" href="#">
+                            <a class="a-tag-post" href="/book/{{book.bookid}}">
                             <h5 class="post-book-author">{% for author in book.authors %}
                                 {{author}}
                                 {% if not forloop.last %} 
@@ -41,8 +41,8 @@
                         <div class="add-book-container">
                             <form method="POST">
                                 {% csrf_token %}
-                                <input type="hidden" name="id" value="{{post.bookid}}">
-                                <input type="hidden" name="title" value="{{post.name}}">
+                                <input type="hidden" name="id" value="{{book.bookid}}">
+                                <input type="hidden" name="title" value="{{book.name}}">
                                 <div class="button_cont"><button type="submit" class="example_f" target="_blank" rel="nofollow"><span>Add Book</button></div>
                             </form>
                         </div>
