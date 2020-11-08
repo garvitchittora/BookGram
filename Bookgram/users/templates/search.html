@@ -78,10 +78,13 @@
             var inputTitle=$("#booktitle").val();
             if(inputValue!=""){
                 inputvalue=inputvalue+"+"+m2[2];
+                inputTitle=inputTitle+"+"+m2[0];
             }else{
                 inputvalue=m2[2];
+                inputTitle=m2[0];
             }
             $("#booklist").val(inputvalue);
+            $("#booktitle").val(inputTitle);
             
             document.getElementById('your-books').style.display="block";
             tab1+='<ul class="col-sm-3 ybks-list"><li><h5>'+ m2[0].substring(0,25) + '</li></h5>' + '<li><img src=' + m2[1] + ' style="width:80px; height:120px" class="your-bks-img"></li></ul>';

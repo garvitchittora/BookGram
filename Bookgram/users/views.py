@@ -163,7 +163,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         auth_login(request, user)
-        return redirect("/")        
+        return redirect("/search")        
     else:
         return render(request, 'invalidEmail.html') 
 
@@ -294,6 +294,19 @@ def searchUser(request):
 def searchBook(request):
     if request.method == 'POST':
         x = request.POST["id"]
-        print(x.split("+"))
+        y = request.POST["title"]
+        x=x.split("+")
+        y=y.split("+")
+        user=request.user
+        books = user.books.all() 
+
+        for index,book in enumerate(x):
+            if books.filter(bookid=book).count()==0:
+                print(book,y[index])
+                book=Book(bookid=book,title=y[index])
+                book.save()
+                user.books.add(book)
+                user.save()
+
         
     return render(request, "search.html")  
