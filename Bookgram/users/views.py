@@ -38,14 +38,21 @@ def home(request):
 
         books = user.books.all()
         if request.method == 'POST':
-            bookid=request.POST["id"]
-            title=request.POST["title"]     
-            if books.filter(bookid=bookid).count()==0:
-                book=Book(title = title,bookid=bookid)
-                book.save()
-                user.books.add(book)
-                user.save()
-        
+            if request.POST["formid"]=="1":
+                bookid=request.POST["id"]
+                title=request.POST["title"]     
+                if books.filter(bookid=bookid).count()==0:
+                    book=Book(title = title,bookid=bookid)
+                    book.save()
+                    user.books.add(book)
+                    user.save()
+            else:
+                if User.objects.filter(id=request.POST["id"]).count()>0:
+                    fuser = User.objects.filter(id=request.POST["id"]).first()
+                    user=request.user
+                    user.followers.add(fuser)
+                    user.save()
+
         books = user.books.all()
 
         listName=[]
@@ -219,6 +226,18 @@ def userProfile(request,slug):
 
 def bookDetails(request,slug):
     data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+slug).json()
+    if request.method == 'POST':
+        bookid=request.POST["id"]
+        title=request.POST["title"]  
+        user= request.user
+        books = user.books.all()   
+        
+        if books.filter(bookid=bookid).count()==0:
+            book=Book(title = title,bookid=bookid)
+            book.save()
+            user.books.add(book)
+            user.save()
+
     if "items" in data:
         data=data["items"]
         if len(data)>=0 :
@@ -243,7 +262,7 @@ def bookDetails(request,slug):
     listrecom=[]
     listrecom.append(obj["name"])
     recom_book = recom_list_combined(listrecom)
-        
+
     dataBook=[]
     if recom_book and len(recom_book)>0:
         for book in recom_book:
@@ -252,16 +271,16 @@ def bookDetails(request,slug):
                 data=data["items"]
                 if len(data)>=0 :
                     data=data[0]
-                    obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":"","rating":"0"}
-                    obj["name"]=data["volumeInfo"]["title"]
-                    obj["bookid"]=data["id"]
+                    ob={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":"","rating":"0"}
+                    ob["name"]=data["volumeInfo"]["title"]
+                    ob["bookid"]=data["id"]
                     if  "authors" in data["volumeInfo"]:
-                        obj["authors"]=data["volumeInfo"]["authors"]
+                        ob["authors"]=data["volumeInfo"]["authors"]
                     if "imageLinks" in data["volumeInfo"]:
-                        obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                        ob["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
                     if 'averageRating' in data["volumeInfo"]:
-                        obj["rating"]=str(data["volumeInfo"]["averageRating"])
-                    dataBook.append(obj)
+                        ob["rating"]=str(data["volumeInfo"]["averageRating"])
+                    dataBook.append(ob)
 
     return render(request, "bookdetails.html",{"dataBook":dataBook,"obj":obj})
 
