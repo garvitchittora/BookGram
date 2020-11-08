@@ -285,16 +285,24 @@ def bookDetails(request,slug):
     return render(request, "bookdetails.html",{"dataBook":dataBook,"obj":obj})
 
 def searchUser(request):
-    x = ""
-    if request.method == 'POST':
-        x = request.POST["name"]
+    users=User.objects.all()
+    if request.method=="POST":
+        if request.POST["formvalue"]=="1":
+            email=request.POST["email"]
+            users=User.objects.filter(email=email).all()
+        else:
+            userid=request.POST["id"]   
+            followers=request.user.followers.all()  
+            if followers.filter(id=userid).count()==0:
+                fuser=User.objects.filter(id=userid).first()
+                request.user.followers.add(fuser)
+                request.user.save()
     
-    return render(request, "usersearch.html",{"string":x})    
+    return render(request, "usersearch.html",{"users":users})    
 
 def compose(request):
-    
-    return render(request, "compose.html")    
 
+    return render(request, "compose.html",{})    
 
 def searchBook(request):
     if request.method == 'POST':

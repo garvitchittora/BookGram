@@ -1,50 +1,65 @@
 {% include "partials/header.html" %}
 {% block body %}
 <style>
-.example_f span:after {
-  content: '...';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-  }
+    .example_f span:after {
+      content: '...';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+      }
 </style>
     <div class="container search-box">
         <div class="form-group">
-            <input
-              id="inp_text"
-              type="text"
-              class="form-control"
-              aria-describedby="emailHelp"
-              name="email"
-              placeholder="Search User Here"
-            />
-            <div class="user-recom-footer">
-                <div class="button_cont" style="text-align: right;"><a class="example_f" href="#" target="_blank" rel="nofollow"><span>Search</a></div>
-            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <input
+                id="inp_text"
+                type="text"
+                class="form-control"
+                aria-describedby="emailHelp"
+                name="email"
+                placeholder="Search User by email"
+                />
+                <input type="hidden" name="formvalue" value="1">
+                <div class="user-recom-footer">
+                    <div class="button_cont" style="text-align: right;"><button type="submit" class="example_f" target="_blank" rel="nofollow" style="width: auto;"><span>Search</button></div>
+                </div>
+            </form>
           </div>
        </div>
 
     <div class="container">
         <div class="row">
+            {% for user in users %}
             <div class="col-lg-6">
                 <div class="container post-container">
                     <div class="heading-container row">
                         <div class="col-lg-2">
-                            <img class="image-user-r" src="http://books.google.com/books/content?id=uHs7gpNKqTEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/>
+                            {% if user.image %}
+                            <img class="image-user-r" src="{{user.image.url}}"/>
+                            {% else %}
+                            <img class="image-user-r" src="https://yobafit.com/static/img/icons/0000.png"/>
+                            {% endif %}
                         </div>
                         <div class="col-lg-10">
-                            <a class="a-tag-post" href="#">
-                                <h3 class="user-r-name">Garvit Chittora</h3>
+                            <a class="a-tag-post" href="/user/{{user.slug}}">
+                                <h3 class="user-r-name">{{user.get_full_name}}</h3>
                             </a>
-                            <div class="user-recom-footer">
-                                <div class="button_cont" style="text-align: right;"><a class="example_f" href="#" target="_blank" rel="nofollow"><span>Follow User</a></div>
+                            <div class="user-recom-footer" style="padding: 0;">
+                                <form method="POST" style="display: inline-block;float: right;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="formvalue" value="2">
+                                    <input type="hidden" name="id" value="{{user.id}}">
+                                    <div class="button_cont"><button type="submit" class="example_f" target="_blank" rel="nofollow" style="width: auto;"><span>Follow User</button></div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
