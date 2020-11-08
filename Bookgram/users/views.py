@@ -288,14 +288,12 @@ def searchUser(request):
     x = ""
     if request.method == 'POST':
         x = request.POST["name"]
-        
     
-    return render(request, "index.html",{"string":x})    
+    return render(request, "usersearch.html",{"string":x})    
 
 def searchBook(request):
-    x = ""
     if request.method == 'POST':
-        x = request.POST["name"]
+        x = request.POST["id"]
+        print(x.split("+"))
         
-    
-    return render(request, "index.html",{"string":x})  
+    return render(request, "search.html")  

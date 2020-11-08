@@ -283,3 +283,45 @@ body {
     margin: 0 auto;
     margin-top: 3rem;
   }
+
+  #list{
+    margin-top: 100px !important;
+  }
+  
+  .search-box{
+    margin-top: 50px;
+  }
+  
+  #inp_text{
+    border: 1px solid rgb(70, 139, 218);
+  }
+  
+  .books-list{
+    list-style-type: none;
+    text-align: center;
+    border:1px solid salmon;
+    border-radius: 20px;
+  }
+  
+  #your-books{
+    color:#ad4455;
+    padding: 20px 50px;
+    padding-bottom: 10px;
+  }
+  
+  .your-bks-img{
+    left:400px;
+  }
+  
+  .ybks-list{
+    list-style-type: none;
+    text-align: center;
+    /* background:rgba(255, 195, 160, 0.1);
+    border-radius: 20px;
+  } */
+  }
+  
+  .ybks-list li{
+    background:rgba(255, 195, 160, 0.1);
+    border-radius: 20px;
+  }    

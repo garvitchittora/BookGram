@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="../dist/bootstrap.min.css" />
-    <link
-    href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
-    rel="stylesheet"
-    />
-</head>
-<body>
+{% include "partials/header.html" %}
+{% block body %}
     
-    <h1 id="your-books" style="display: none;">Your Books</h1>
+    <h1 id="your-books" style="display: none;">Your Books
+        <form method="POST" style="display: inline-block;">
+            {% csrf_token %}
+            <input type="hidden" name="id" id="booklist" value="">
+            <input type="hidden" name="title" id="booktitle" value="">
+            <div class="button_cont"><button type="submit" class="example_f" target="_blank" rel="nofollow" style="width: auto;"><span>Add All Selected Books</button></div>
+        </form>
+    </h1>
     <hr>
     <div id="stored-section" class="row container">
     </div>
@@ -26,11 +22,11 @@
           aria-describedby="emailHelp"
           name="email"
           oninput="reFunc()"
-          placeholder="Search Here"
+          placeholder="Search Book Here"
         />
       </div>
    </div>
-
+   
 
       <div id="list" class="row"></div>
 
@@ -61,33 +57,38 @@
             {
 
                 var m1 = r.volumeInfo.title;
+                var x1 = r.id;
                 var n1 = r.volumeInfo.imageLinks.thumbnail;
-                tab+='<ul class="col-sm-3 books-list">' +
+                tab+='<ul class="col-sm-4 books-list">' +
                         '<li maxlength=15><h4>'+ r.volumeInfo.title.substring(0,25)+ '</h4></li>'+
                         '<li><img src=' + r.volumeInfo.imageLinks.thumbnail + ' style="width:150px; height:200px"></li>' +
-                        '<li><button type="button" class="example_f" onclick=\"(canLaunch(\'' + m1 +','+ n1 + '\'))"\ id="'+r.id+'">Add to Fav</button></li>'+
+                        '<li><button type="button" class="example_f" onclick=\"(canLaunch(\'' + m1 +','+ n1 +' ,'+ x1 + '\'))"\ id="'+r.id+'">Add to Fav</button></li>'+
                     '</ul>'
 
             }
             document.getElementById("list").innerHTML = tab; 
         }
         
-
         let tab1 =  '<div></div>';
         function canLaunch(m)
-        {
-            console.log(typeof(m));
-            document.getElementById('your-books').style.display="block";
+        {   
             var m2 = m.split(",");
+            console.log(m2);
+            var inputValue=$("#booklist").val();
+            var inputTitle=$("#booktitle").val();
+            if(inputValue!=""){
+                inputvalue=inputvalue+"+"+m2[2];
+            }else{
+                inputvalue=m2[2];
+            }
+            $("#booklist").val(inputvalue);
+            
+            document.getElementById('your-books').style.display="block";
             tab1+='<ul class="col-sm-3 ybks-list"><li><h5>'+ m2[0].substring(0,25) + '</li></h5>' + '<li><img src=' + m2[1] + ' style="width:80px; height:120px" class="your-bks-img"></li></ul>';
 
             document.getElementById("stored-section").innerHTML = tab1; 
 
         }
 
-
     </script>
-</body>
-</html>
-
-
+{% endblock %}
