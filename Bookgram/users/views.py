@@ -15,7 +15,7 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 import requests
 import json
-# from .ml import recom_list_combined
+from .ml import recom_list_combined
 
 def getUserWithSimilarBook(user):
     userAll= User.objects.all()
