@@ -1,9 +1,6 @@
 {% load static %}
 {% include "partials/header.html" %}
 {% block body %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css" rel="stylesheet"/> 
 <section class="details-page">
     <div class="row p-1 d-flex justify-content-around">
         <div class="col-8">
@@ -21,14 +18,8 @@
                             {% if not forloop.last %} 
                             ,
                             {% endif %}
-                        {% endfor %</h3>
+                        {% endfor %}</h3>
                         </a>
-                        <!-- {% for day in session_data.temp %}
-                                                    {{day}}
-                                                    {% if not forloop.last %} 
-                                                    ,
-                                                    {% endif %}
-                                                {% endfor %} -->
                     </div>
                 </div>
                 

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import home, login, register, userProfile, bookDetails, searchUser, searchBook, activate, logout
+from .views import home, login, register, userProfile, bookDetails, searchUser, searchBook, activate, logout, compose
 # from django.conf.urls import url
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path('searchuser/', searchUser,name="searchUser"),
     path('search/', searchBook,name="searchBook"),
     path('activate/<uidb64>/<token>/',activate, name='activate'), 
+    path('compose/', compose,name="compose"),
 ]
