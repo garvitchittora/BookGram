@@ -11,43 +11,42 @@
                 <div class="d-flex profile-hero">
                     <img src="https://images.vexels.com/media/users/3/136492/isolated/preview/9405e34df4de152cba0e31c040f5675e-open-book-round-icon-by-vexels.png" alt="display picture" class="display-picture user-display-picture">
                     <div class="user-info">
-                        <h1 class="display-4">Sarthak Maheshwari</h1>
-                        <h4>Followers: 69</h4>
-                        <h4>Following: 420</h4>
+                        <h1 class="display-4">{{name}}</h1>
+                        <h4>Followers: {{followersNumber}}</h4>
+                        <h4>Following: {{followingNumber}}</h4>
                     </div>
                 </div>
                 <div class="user-posts">
                     <div class="post">
                         <div class="row">
+                            {% for post in dataPosts %}
                             <div class="col-lg-6">
                                 <div class="container post-container">
                                     <div class="heading-container">
                                         <div>
-                                            <a class="a-tag-post" href="#">
-                                                <h3 class="post-book-name">Book Name</h3>
+                                            <a class="a-tag-post" href="/book/{{post.bookid}}">
+                                                <h3 class="post-book-name">{{post.name}}</h3>
                                             </a>
                                         </div>
                                         <div>
-                                            <a class="a-tag-post" href="#">
-                                            <h5 class="post-book-author">Author Name</h5>
+                                            <a class="a-tag-post" href="/book/{{post.bookid}}">
+                                            <h5 class="post-book-author">{% for author in post.authors %}
+                                                {{author}}
+                                                {% if not forloop.last %} 
+                                                ,
+                                                {% endif %}
+                                            {% endfor %}</h5>
                                             </a>
-                                            <!-- {% for day in session_data.temp %}
-                                                                        {{day}}
-                                                                        {% if not forloop.last %} 
-                                                                        ,
-                                                                        {% endif %}
-                                                                    {% endfor %} -->
                                         </div>
                                     </div>
                                     
                                     <div class="post-image-container">
-                                        <img class="post-image" src="http://books.google.com/books/content?id=uHs7gpNKqTEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/>
+                                        <img class="post-image" src="{{post.image}}"/>
                                     </div>
-                                    <div class="user-post-footer">
+                                    <div class="user-post-footer">post
                                         <div style="text-align: left;padding: 0 30px;">
                                             <p class="caption-style-1" id="caption">
-                                                Lorem ipsum dolor sitLorem ipsum dolor sitLorem ipsum dolor sitLorem ipsum dolor sit amet, consectetur adipiscing 
-                                                elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scel
+                                                {{post.caption}}
                                             </p>
                                             <a onclick="myFunction(this)" id="myBtn" style="cursor: pointer;color:#FFB1B9;">more</a>
                                             <span id="dots" style="cursor: pointer;color:#FFB1B9;"></span>
@@ -56,67 +55,25 @@
                                             <div class="rateYo" style="margin: auto;padding: 3px;"></div>
                                         </div>
                                         <div class="add-book-container">
-                                            <div class="button_cont"><a class="example_f" href="#" target="_blank" rel="nofollow"><span>Add Book</a></div>
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="id" value="{{post.bookid}}">
+                                                <input type="hidden" name="title" value="{{post.name}}">
+                                                <div class="button_cont"><button type="submit" class="example_f" target="_blank" rel="nofollow"><span>Add Book</button></div>
+                                            </form>
                                         </div>
                                     </div>
                                     <script type="text/javascript">
                                         $(".rateYo").rateYo({
-                                            rating: "4",
+                                            rating: "{{post.rating}}",
                                             readOnly: true,
                                             starWidth: "18px"
                                         });
                                     </script>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="container post-container">
-                                    <div class="heading-container">
-                                        <div>
-                                            <a class="a-tag-post" href="#">
-                                                <h3 class="post-book-name">Book Name</h3>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a class="a-tag-post" href="#">
-                                            <h5 class="post-book-author">Author Name</h5>
-                                            </a>
-                                            <!-- {% for day in session_data.temp %}
-                                                                        {{day}}
-                                                                        {% if not forloop.last %} 
-                                                                        ,
-                                                                        {% endif %}
-                                                                    {% endfor %} -->
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="post-image-container">
-                                        <img class="post-image" src="http://books.google.com/books/content?id=uHs7gpNKqTEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/>
-                                    </div>
-                                    <div class="user-post-footer">
-                                        <div style="text-align: left;padding: 0 30px;">
-                                            <p class="caption-style-1" id="caption">
-                                                Lorem ipsum dolor sitLorem ipsum dolor sitLorem ipsum dolor sitLorem ipsum dolor sit amet, consectetur adipiscing 
-                                                elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scel1
-                                            </p>
-                                            <a onclick="myFunction(this)" id="myBtn" style="cursor: pointer;color:#FFB1B9;">more</a>
-                                            <span id="dots" style="cursor: pointer;color:#FFB1B9;"></span>
-                                        </div>
-                                        <div>
-                                            <div class="rateYo" style="margin: auto;padding: 3px;"></div>
-                                        </div>
-                                        <div class="add-book-container">
-                                            <div class="button_cont"><a class="example_f" href="#" target="_blank" rel="nofollow"><span>Add Book</a></div>
-                                        </div>
-                                    </div>
-                                    <script type="text/javascript">
-                                        $(".rateYo").rateYo({
-                                            rating: "2.5",
-                                            readOnly: true,
-                                            starWidth: "18px"
-                                        });
-                                    </script>
-                                </div>
-                            </div>
+                            {% endfor %}
+                            
                             <script>
                                 function myFunction(element) {
                                     var pElement=$(element).closest(":has(p)").find('p');
@@ -142,33 +99,28 @@
             </div>
             <div class="col-3 recent__books">
                 <h2>Recently Saved Books</h2>
+                {% for book in dataBook %}
                 <div class="recent__books-main">
                     <div class="book d-flex">
-                        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsffbookreview.files.wordpress.com%2F2016%2F07%2Fway-of-kings1.jpg&f=1&nofb=1" alt="Book">
+                        <img src="{{book.image}}" alt="Book">
                         <div class="recent__books-info">
-                            <h3>The way of kings</h3>
-                            <h4>Brandon Sanderson</h4>
+                            <a class="a-tag-post" href="/book/{{book.bookid}}">
+                                <h3 class="post-book-name">{{book.name}}</h3>
+                            </a>
+                            <a class="a-tag-post" href="/book/{{book.bookid}}">
+                                <h4>
+                                    {% for author in book.authors %}
+                                        {{author}}
+                                        {% if not forloop.last %} 
+                                        ,
+                                        {% endif %}
+                                    {% endfor %}
+                                </h4>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="recent__books-main">
-                    <div class="book d-flex">
-                        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsffbookreview.files.wordpress.com%2F2016%2F07%2Fway-of-kings1.jpg&f=1&nofb=1" alt="Book">
-                        <div class="recent__books-info">
-                            <h3>The way of kings</h3>
-                            <h4>Brandon Sanderson</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="recent__books-main">
-                    <div class="book d-flex">
-                        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsffbookreview.files.wordpress.com%2F2016%2F07%2Fway-of-kings1.jpg&f=1&nofb=1" alt="Book">
-                        <div class="recent__books-info">
-                            <h3>The way of kings</h3>
-                            <h4>Brandon Sanderson</h4>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -1,0 +1,336 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif !important;
+  overflow-x: hidden;
+}
+
+.loginPage {
+  margin: 0;
+  padding: 3.5rem;
+  min-height: 100%;
+  /* background-color: #fbab7e;
+  background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%); */
+  background-color: #fbda61;
+  background-image: linear-gradient(45deg, #ffafbd 0%, #ffc3a0 100%);
+}
+
+.loginText {
+  font-family: Raleway;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.loginText h1 {
+  font-weight: 600;
+}
+
+.loginCard {
+  box-shadow: 0 5px 28px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  padding: 3rem 4rem;
+  width: 30rem;
+  margin: 2rem auto;
+  background-color: white;
+  border-radius: 1rem;
+}
+
+.composeCard {
+  box-shadow: 0 5px 28px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  padding: 3rem 4rem;
+  width: 50rem;
+  margin: 2rem auto;
+  background-color: white;
+  border-radius: 1rem;
+}
+
+.form-group label {
+  font-size: 1rem;
+}
+
+.form-group input {
+  font-size: 1rem;
+}
+
+.loginButton {
+  margin-top: 1rem;
+  width: 100%;
+  border: none;
+  background-color: #4796ff;
+  color: white;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+}
+
+#main-navbar{
+  padding: 25px;
+  background-color: #343a40!important;
+}
+
+.nav-link{
+  transition: .3s all ease;
+}
+
+.nav-link:hover{
+  color: white!important;
+}
+
+.nav-item a{
+  font-size: 1.1rem;
+}
+
+.home-link{
+  font-size: 1.5rem!important;
+}
+
+#display-picture{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.profile{
+  padding: 3rem 6rem;
+}
+
+.profile-hero{
+  background-color: #FFC3A0;
+  align-items: center;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.recent__books{
+  background-color: #f8f9fd;
+  border-radius: .6rem;
+  padding: 0.5rem 0;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.profile-hero img{
+  width: 12rem;
+  height: 12rem;
+}
+
+.book{
+  margin-top: .6rem;
+  background-color: rgb(227, 245, 238);
+  justify-content: space-around;
+  align-items: center;
+  border-radius: .3rem;
+  padding: .3rem 0;
+}
+
+.user-info h1{
+    font-size: 3rem;
+}
+
+.user-info h4{
+  font-size: 1.2rem;
+}
+
+.book img{
+  border-radius: .7rem;
+  width: 7rem;
+}
+
+.example_f {
+  border-radius: 4px;
+  background: linear-gradient(45deg, #ffafbd 0%, #ffc3a0 100%) !important;
+  border: none;
+  color: #FFFFFF !important;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1rem;
+  border-radius: 3rem;
+  padding: .6rem 1rem;
+  width: 12rem;
+  transition: all 0.4s;
+  cursor: pointer;
+  margin: 5px;
+  }
+
+  .example_f:focus{
+    outline: none;
+  }
+
+  .example_f span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.4s;
+  }
+  .example_f span:after {
+  content: '+';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+  }
+  .example_f:hover span {
+  padding-right: 25px;
+  }
+  .example_f:hover span:after {
+  opacity: 1;
+  right: 0;
+  }
+  .post-container{
+    margin: 20px 0px;
+    border: 1px solid rgb(239,239,239);
+    padding-right: 0 !important;
+    border-radius: 15px;
+    overflow: hidden;
+    padding-left: 0 !important;
+    text-align: center;
+  }
+
+  .post-details-container{
+    border: 1px solid rgb(239,239,239);
+    border-radius: 15px;
+    overflow: hidden;
+    padding-left: 0 !important;
+    text-align: center;
+  }
+
+  .post-image-container{
+      text-align: center;
+      background-color: #FAFAFA;
+      padding: 1rem 0;
+  }
+  .post-image{
+    height: 15rem;
+    border-radius: 20px;
+    box-shadow: -5px 5px 20px #8888;
+  }
+  .heading-container{
+    font-family: Raleway;
+    padding: 10px;
+    background-color: white;
+  }
+  .post-footer{
+    padding: 20px;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    background-color: white;
+  }
+  .add-book-container{
+    text-align: center;
+    margin-top: 15px;
+  }
+  .post-book-name{
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+  }
+  .post-book-author{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+  }
+  .a-tag-post{
+    color: black !important;
+    text-decoration: none !important;
+  }
+  .user-recom-footer{
+    padding: 20px;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    background-color: white;
+  }
+  .image-user-r{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+  }
+  .user-r-name{
+    font-weight: 600;
+    font-size: 20px;  
+    text-align: left;
+  }
+  .user-post-footer{
+    padding: 20px;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    background-color: white;
+  }
+  .caption-style-1{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    font-size: 1rem;
+    /* height:3em; */
+    -webkit-box-orient: vertical;
+    margin-bottom: 0px;
+  }
+  .caption-style-2{
+    font-size: 0.6rem;
+    display: -webkit-box;
+    margin-bottom: 0;
+  }
+
+  .caption-style-3{
+    font-size: 1rem;
+    margin: 0.6rem 0;
+  }
+
+  .details-page{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 3rem;
+  }
+
+  #list{
+    margin-top: 100px !important;
+  }
+  
+  .search-box{
+    margin-top: 50px;
+  }
+  
+  #inp_text{
+    border: 1px solid rgb(70, 139, 218);
+  }
+  
+  .books-list{
+    list-style-type: none;
+    text-align: center;
+    border:1px solid salmon;
+    border-radius: 20px;
+  }
+  
+  #your-books{
+    color:#ad4455;
+    padding: 20px 50px;
+    padding-bottom: 10px;
+  }
+  
+  .your-bks-img{
+    left:400px;
+  }
+  
+  .ybks-list{
+    list-style-type: none;
+    text-align: center;
+    /* background:rgba(255, 195, 160, 0.1);
+    border-radius: 20px;
+  } */
+  }
+  
+  .ybks-list li{
+    background:rgba(255, 195, 160, 0.1);
+    border-radius: 20px;
+  }    

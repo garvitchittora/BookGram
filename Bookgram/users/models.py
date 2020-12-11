@@ -7,9 +7,9 @@ from django.utils import timezone
 
 class Book(models.Model):
     title = models.CharField( max_length=1000, null=True, blank=True)
-    isbn = models.CharField( max_length=100, null=True, blank=True)
+    bookid = models.CharField( max_length=100, null=True, blank=True)
     def __str__(self):
-        return str(self.isbn)   
+        return str(self.bookid)   
 
 class User(AbstractUser):
     slug=models.SlugField(max_length=250,null=True,blank=True,unique=True)
@@ -42,7 +42,7 @@ def slug_generator(sender,instance,*arg,**k):
 pre_save.connect(slug_generator,sender=User)  
 
 class Post(models.Model):
-    user= models.OneToOneField(User, null=True, blank=True, on_delete=models.SET_NULL)
+    user= models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     caption = models.CharField( max_length=10000, null=True, blank=True)
     bookid = models.CharField( max_length=100, null=True, blank=True)
     created_date = models.DateTimeField('date created', default=timezone.now)

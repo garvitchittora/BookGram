@@ -29,21 +29,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/search">Find books</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/searchuser">Find Users</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 {% if request.user.is_authenticated %}
                 <li class="nav-item px-lg-2 d-flex logged-in-as">
-                    <a href="user/{{request.user.slug}}">
+                    <a href="/user/{{request.user.slug}}">
                         {% if request.user.image %}
                             <img src="{{request.user.image.url}}" class="align-self-center" id="display-picture">
                         {% endif%}
                         <span class="nav-link" style="display: inline-block;">{{request.user.get_full_name}}</span>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/compose">Compose<span class="sr-only">(current)</span></a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-item nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
                 </li>
+                
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>

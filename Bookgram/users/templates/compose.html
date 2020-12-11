@@ -1,0 +1,97 @@
+{% include "partials/header.html" %}
+{% block body %}
+<div class="loginPage">
+  <div>
+    <div class="composeCard my-1">
+      <div class="loginText">
+        <h1>New post</h1>
+        <h3>Share something with others</h3>
+      </div>
+      <div class="loginForm">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>Select a book</label>
+            <input
+              type="text"
+              id="inp_text"
+              class="form-control"
+              aria-describedby="emailHelp"
+              name="search"
+              oninput="reFunc()"
+            />
+            <input
+              type="hidden"
+              id="inp_id"
+              class="form-control"
+              aria-describedby="emailHelp"
+              name="id"
+            />
+          </div>
+          <div id="list" class="row"></div>
+          <div class="form-group">
+            <label>Your thoughts...</label>
+            <textarea
+                class="form-control"
+                aria-describedby="emailHelp"
+                name="caption"
+                rows=5
+            ></textarea>
+          </div>
+          <button class="loginButton">Post</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    async function getapi() { 
+
+        const ttl = document.getElementById('inp_text').value;
+        const response = await fetch("https://www.googleapis.com/books/v1/volumes?q="+ttl + "&maxResults=6"); 
+        
+        // Storing data in form of JSON 
+        var data = await response.json(); 
+        // console.log(data.items);
+        addData(data)
+        } 
+    // getapi();
+
+    function reFunc()
+    {
+        getapi();
+    }
+
+    function addData(data)
+    {
+        let tab =  '<div></div>';
+
+        for(let r of data.items)
+        {
+
+            var m1 = r.volumeInfo.title;
+            var x1 = r.id;
+            var n1 = r.volumeInfo.imageLinks.thumbnail;
+            tab+='<ul class="col-sm-4 books-list">' +
+                    '<li maxlength=15><h4>'+ r.volumeInfo.title.substring(0,25)+ '</h4></li>'+
+                    '<li><img src=' + r.volumeInfo.imageLinks.thumbnail + ' style="width:150px; height:200px"></li>' +
+                    '<li><button type="button" class="example_f" onclick=\"(canLaunch(\'' + m1 +','+ n1 +' ,'+ x1 + '\'))"\ id="'+r.id+'">Select</button></li>'+
+                '</ul>'
+
+        }
+        document.getElementById("list").innerHTML = tab; 
+    }
+    
+    let tab1 =  '<div></div>';
+    function canLaunch(m)
+    {   
+        var m2 = m.split(",");
+        $('#inp_text').val(m2[0]);
+        $('#inp_id').val(m2[2]);
+        $('.books-list').css("display", "none");
+    }
+
+</script>
+
+{% endblock %}

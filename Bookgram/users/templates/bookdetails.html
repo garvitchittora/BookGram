@@ -1,0 +1,129 @@
+{% load static %}
+{% include "partials/header.html" %}
+{% block body %}
+<section class="details-page">
+    <div class="row p-1 d-flex justify-content-around">
+        <div class="col-8">
+            <div class="post-container post-details-container m-0">
+                <div class="heading-container">
+                    <div>
+                        <a class="a-tag-post" href="#">
+                            <h2 class="post-book-name">{{obj.name}}</h2>
+                        </a>
+                    </div>
+                    <div>
+                        <a class="a-tag-post" href="#">
+                        <h3 class="post-book-author">{% for author in obj.authors %}
+                            {{author}}
+                            {% if not forloop.last %} 
+                            ,
+                            {% endif %}
+                        {% endfor %}</h3>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="post-image-container d-flex align-items-center" style="padding: 20px;">
+                    <img src="{{obj.image}}" alt="book image" class="post-image">
+                        <div style="text-align: left;padding: 0 30px;">
+                            <p class="caption-style-1" id="caption">
+                                {{obj.description}}
+                            </p>
+                            
+                            <a onclick="myFunction(this)" id="myBtn" style="cursor: pointer;color:#FFB1B9;">more</a>
+                            <p class="caption-style-3 d-flex justify-content-between">
+                                <span>Page Count: {{obj.pageCount}}</span>
+                                <span>Publisher: {{obj.publisher}}</span>
+                                <span>Publishing date: {{obj.publishedDate}}</span>
+                            </p>
+                            <span id="dots" style="cursor: pointer;color:#FFB1B9;"></span>
+                            <div>
+                                <div class="rateYo" style="margin: auto;padding: 3px;"></div>
+                            </div>
+                            <div class="add-book-container">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id" value="{{obj.bookid}}">
+                                    <input type="hidden" name="title" value="{{obj.name}}">
+                                    <div class="button_cont"><button type="submit" class="example_f" target="_blank" rel="nofollow"><span>Add Book</button></div>
+                                </form>
+                            </div>
+                        </div>
+                </div>
+                <script type="text/javascript">
+                    $(".rateYo").rateYo({
+                        rating: "{{obj.rating}}",
+                        readOnly: true,
+                        starWidth: "18px"
+                    });
+                </script>
+            </div>
+        </div>
+
+        <div class="col-3 recent__books">
+            <h2>Recommended Books</h2>
+            {% for book in dataBook %}
+            <div class="recent__books-main">
+                <div class="book d-flex">
+                    <img src="{{book.image}}" alt="Book">
+                    <div class="recent__books-info">
+                        <a class="a-tag-post" href="/book/{{book.bookid}}">
+                            <h3 class="post-book-name">{{book.name}}</h3>
+                        </a>
+                        <a class="a-tag-post" href="/book/{{book.bookid}}">
+                            <h4>
+                                {% for author in book.authors %}
+                                    {{author}}
+                                    {% if not forloop.last %} 
+                                    ,
+                                    {% endif %}
+                                {% endfor %}
+                            </h4>
+                        </a>
+                        <div>
+                            <div class="rateYo" style="margin: auto;padding: 3px;"></div>
+                        </div>
+                        <div class="add-book-container">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{book.bookid}}">
+                                <input type="hidden" name="title" value="{{book.name}}">
+                                <div class="button_cont"><button type="submit" class="example_f" target="_blank" rel="nofollow"><span>Add Book</button></div>
+                            </form>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(".rateYo").rateYo({
+                            rating: "{{book.rating}}",
+                            readOnly: true,
+                            starWidth: "18px"
+                        });
+                    </script>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<script>
+    function myFunction(element) {
+        var pElement=$(element).closest(":has(p)").find('p');
+        console.log(pElement.text())
+        var dots = $(element).closest(":has(span)").find('span');
+        var btnText = element;
+        if (dots.css("display") === "none") {
+            dots.css("display","inline");
+            btnText.innerHTML = "more"; 
+            pElement.addClass("caption-style-1");
+            pElement.removeClass("caption-style-2");
+        } else {
+            dots.css("display","none");
+            btnText.innerHTML = "less"; 
+            pElement.addClass("caption-style-2");
+            pElement.removeClass("caption-style-1");
+        }
+    }
+</script>
+
+{% endblock %}

@@ -13,14 +13,17 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
+import requests
+import json
+from .ml import recom_list_combined
 
 def getUserWithSimilarBook(user):
     userAll= User.objects.all()
     similarUser=[]
     for book in user.books.all():
-        isbn=book.isbn
+        bookid=book.bookid
         for u in userAll:
-            if u.books.filter(isbn=isbn).count()>0 and not ( u in similarUser) and not (u == user ):
+            if u.books.filter(bookid=bookid).count()>0 and not ( u in similarUser) and not (u == user ):
                 similarUser.append(u)
 
     return similarUser        
@@ -32,10 +35,52 @@ def home(request):
         x = ""
         user= request.user
         recommendedUsers = getUserWithSimilarBook(user)
+
+        books = user.books.all()
         if request.method == 'POST':
-            x = request.POST["name"]
-            
-        return render(request, "index.html",{"string":x,"user":user,"recommendedUsers":recommendedUsers})
+            if request.POST["formid"]=="1":
+                bookid=request.POST["id"]
+                title=request.POST["title"]     
+                if books.filter(bookid=bookid).count()==0:
+                    book=Book(title = title,bookid=bookid)
+                    book.save()
+                    user.books.add(book)
+                    user.save()
+            else:
+                if User.objects.filter(id=request.POST["id"]).count()>0:
+                    fuser = User.objects.filter(id=request.POST["id"]).first()
+                    user=request.user
+                    user.followers.add(fuser)
+                    user.save()
+
+        books = user.books.all()
+
+        listName=[]
+        for book in books:
+            listName.append(book.title)
+        
+        recom_book = recom_list_combined(listName)
+        
+        dataBook=[]
+        if recom_book and len(recom_book)>0:
+            for book in recom_book:
+                data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+book).json()
+                if "items" in data:
+                    data=data["items"]
+                    if len(data)>=0 :
+                        data=data[0]
+                        obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":"","rating":"0"}
+                        obj["name"]=data["volumeInfo"]["title"]
+                        obj["bookid"]=data["id"]
+                        if  "authors" in data["volumeInfo"]:
+                            obj["authors"]=data["volumeInfo"]["authors"]
+                        if "imageLinks" in data["volumeInfo"]:
+                            obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                        if 'averageRating' in data["volumeInfo"]:
+                            obj["rating"]=str(data["volumeInfo"]["averageRating"])
+                        dataBook.append(obj)
+
+        return render(request, "index.html",{"string":x,"user":user,"recommendedUsers":recommendedUsers,"recom_book":dataBook})
 
 def login(request):
     if request.user.is_authenticated:
@@ -118,36 +163,172 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         auth_login(request, user)
-        return redirect("/")        
+        return redirect("/search")        
     else:
         return render(request, 'invalidEmail.html') 
 
 def userProfile(request,slug):
-    print(slug)
-    
-    return render(request, "userProfile.html",{})
+    if request.user.is_authenticated:
+        user=request.user
+        name=user.get_full_name()
+        followersNumber=user.followers.count()
+        followingNumber=user.user_set.all().count()
+        posts = user.post_set.all() 
+        books = user.books.all() 
 
-def bookPage(request,slug):
-    print(slug)
-    x = ""
-    if request.method == 'POST':
-        x = request.POST["name"]
+        if request.method == 'POST':
+            bookid=request.POST["id"]
+            title=request.POST["title"]     
+            if books.filter(bookid=bookid).count()==0:
+                book=Book(title = title,bookid=bookid)
+                book.save()
+                user.books.add(book)
+                user.save()
+
+        books = user.books.all() 
+        dataPosts=[]
+        for post in posts:
+            data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+post.bookid).json()
+            if "items" in data:
+                data=data["items"]
+                if len(data)>=0 :
+                    data=data[0]
+                    obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","caption":post.caption,"bookid":post.bookid,"rating":"0"}
+                    obj["name"]=data["volumeInfo"]["title"]
+                    if  "authors" in data["volumeInfo"]:
+                        obj["authors"]=data["volumeInfo"]["authors"]
+                    if "imageLinks" in data["volumeInfo"]:
+                        obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                    if 'averageRating' in data["volumeInfo"]:
+                        obj["rating"]=str(data["volumeInfo"]["averageRating"])
+                    dataPosts.append(obj)
         
-    
-    return render(request, "index.html",{"string":x})
+        dataBook=[]
+        for book in books:
+            data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+book.bookid).json()
+            if "items" in data:
+                data=data["items"]
+                if len(data)>=0 :
+                    data=data[0]
+                    obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":book.bookid,"rating":"0"}
+                    obj["name"]=data["volumeInfo"]["title"]
+                    if  "authors" in data["volumeInfo"]:
+                        obj["authors"]=data["volumeInfo"]["authors"]
+                    if "imageLinks" in data["volumeInfo"]:
+                        obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                    if 'averageRating' in data["volumeInfo"]:
+                        obj["rating"]=str(data["volumeInfo"]["averageRating"])
+                    dataBook.append(obj)
+
+        return render(request, "userProfile.html",{"name":name,"followersNumber":followersNumber,"followingNumber":followingNumber,"dataPosts":dataPosts,"dataBook":dataBook})
+    else:
+        return redirect("/login")     
+
+def bookDetails(request,slug):
+    data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+slug).json()
+    if request.method == 'POST':
+        bookid=request.POST["id"]
+        title=request.POST["title"]  
+        user= request.user
+        books = user.books.all()   
+        
+        if books.filter(bookid=bookid).count()==0:
+            book=Book(title = title,bookid=bookid)
+            book.save()
+            user.books.add(book)
+            user.save()
+
+    if "items" in data:
+        data=data["items"]
+        if len(data)>=0 :
+            data=data[0]
+            obj={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":slug,"rating":"0","pageCount":"0","description":"","publishedDate":"","publisher":""}
+            obj["name"]=data["volumeInfo"]["title"]
+            if  "authors" in data["volumeInfo"]:
+                obj["authors"]=data["volumeInfo"]["authors"]
+            if "imageLinks" in data["volumeInfo"]:
+                obj["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+            if 'averageRating' in data["volumeInfo"]:
+                obj["rating"]=str(data["volumeInfo"]["averageRating"])
+            if  "pageCount" in data["volumeInfo"]:
+                obj["pageCount"]=data["volumeInfo"]["pageCount"]
+            if  "description" in data["volumeInfo"]:
+                obj["description"]=data["volumeInfo"]["description"]        
+            if  "publishedDate" in data["volumeInfo"]:
+                obj["publishedDate"]=data["volumeInfo"]["publishedDate"]  
+            if  "publisher" in data["volumeInfo"]:
+                obj["publisher"]=data["volumeInfo"]["publisher"]  
+
+    listrecom=[]
+    listrecom.append(obj["name"])
+    recom_book = recom_list_combined(listrecom)
+
+    dataBook=[]
+    if recom_book and len(recom_book)>0:
+        for book in recom_book:
+            data=requests.get("https://www.googleapis.com/books/v1/volumes?q="+book).json()
+            if "items" in data:
+                data=data["items"]
+                if len(data)>=0 :
+                    data=data[0]
+                    ob={"name":"","authors":"","image":"https://yobafit.com/static/img/icons/0000.png","bookid":"","rating":"0"}
+                    ob["name"]=data["volumeInfo"]["title"]
+                    ob["bookid"]=data["id"]
+                    if  "authors" in data["volumeInfo"]:
+                        ob["authors"]=data["volumeInfo"]["authors"]
+                    if "imageLinks" in data["volumeInfo"]:
+                        ob["image"]=data["volumeInfo"]["imageLinks"]["thumbnail"]
+                    if 'averageRating' in data["volumeInfo"]:
+                        ob["rating"]=str(data["volumeInfo"]["averageRating"])
+                    dataBook.append(ob)
+
+    return render(request, "bookdetails.html",{"dataBook":dataBook,"obj":obj})
 
 def searchUser(request):
-    x = ""
-    if request.method == 'POST':
-        x = request.POST["name"]
-        
+    users=User.objects.all()
+    if request.method=="POST":
+        if request.POST["formvalue"]=="1":
+            email=request.POST["email"]
+            users=User.objects.filter(email=email).all()
+        else:
+            userid=request.POST["id"]   
+            followers=request.user.followers.all()  
+            if followers.filter(id=userid).count()==0:
+                fuser=User.objects.filter(id=userid).first()
+                request.user.followers.add(fuser)
+                request.user.save()
     
-    return render(request, "index.html",{"string":x})    
+    return render(request, "usersearch.html",{"users":users})    
+
+def compose(request):
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            bookname=request.POST["search"]
+            bookid=request.POST["id"]
+            bookcaption=request.POST["caption"]
+            post=Post(user=request.user,caption=bookcaption,bookid=bookid)
+            post.save()
+
+        return render(request, "compose.html")    
+    else:
+        return redirect("/login")
 
 def searchBook(request):
-    x = ""
     if request.method == 'POST':
-        x = request.POST["name"]
+        x = request.POST["id"]
+        y = request.POST["title"]
+        x=x.split("+")
+        y=y.split("+")
+        user=request.user
+        books = user.books.all() 
+
+        for index,book in enumerate(x):
+            if books.filter(bookid=book).count()==0:
+                print(book,y[index])
+                book=Book(bookid=book,title=y[index])
+                book.save()
+                user.books.add(book)
+                user.save()
+
         
-    
-    return render(request, "index.html",{"string":x})  
+    return render(request, "search.html")  
